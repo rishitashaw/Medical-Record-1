@@ -54,13 +54,30 @@ writeButton.addEventListener("click", async () => {
 
   try {
     const ndef = new NDEFReader();
-    await ndef.write("tag_{{token}}");
-    alert("> Tag written");
+	await ndef.scan();
+    log("> Scan started");
+
+    ndef.addEventListener("readingerror", () => {
+      log("Argh! Cannot read data from the NFC tag. Try another one?");
+    });
+
+    ndef.addEventListener("reading", ({ message, serialNumber }) => {
+      log("Read");
+    });
+    await ndef.write({
+    records: [{ recordType: "text", data: "tag_{{token}}"}]
+    });
+    setTimeout(function(){
+		console.log("delay");
+   },1000); //delay is in milliseconds 
+
+    log("> Message written");
     window.location.href="/";
   } catch (error) {
     log("Argh! " + error);
   }
 });
+
 </script>
 </BODY>
 </HTML>
