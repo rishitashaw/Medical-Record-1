@@ -220,7 +220,7 @@ def downloadfile():
 	fln=request.args.get('name')
 	uname2=getUserFromFile(fln)
 	if not uname==uname2:
-		return render_template("error.html", "Unauthorized access")
+		return render_template("error.html", reason="Unauthorized access")
 	return send_file(filepth+"userfiles/"+fln, as_attachment=True)
 	
 @app.route("/inittagread", methods=["GET","POST"])
