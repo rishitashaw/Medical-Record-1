@@ -1,0 +1,15 @@
+<html>
+<body>
+
+<h1>Verification</h1>
+<form action="/otpinp" method="post">
+  <label for="fname">Enter OTP sent to email:</label>
+  <input type="text" id="otp" name="otp"><br><br>
+  <input type="hidden" id="encotp" name="encotp" value="{{encotp}}">
+  <input type="hidden" id="encname" name="encname" value="{{encname}}">
+  <input type="hidden" id="encuname" name="encuname" value="{{encuname}}">
+  <input type="hidden" id="enceml" name="enceml" value="{{enceml}}">
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>

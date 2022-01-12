@@ -1,0 +1,7 @@
+pyodbc
+cryptography
+fido2
+flask
+pickle-mixin
+uuid
+secure-smtplib
