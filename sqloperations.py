@@ -55,7 +55,7 @@ def getNameFromUsername(username):
 
 def createTagsTable():
 	try:
-		cursor.execute("CREATE TABLE [Tags](username VARCHAR(30), tagid VARCHAR(30) UNIQUE, name VARCHAR(30), expiry VARCHAR(30))")
+		cursor.execute("CREATE TABLE [Tags](username VARCHAR(30), tagid VARCHAR(100) UNIQUE, name VARCHAR(30), expiry VARCHAR(30))")
 		cursor.commit()
 	except:
 		pass
