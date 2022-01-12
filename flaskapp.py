@@ -367,4 +367,4 @@ def read_key(uname):
 		return []
 
 if __name__ == "__main__":
-	app.run(ssl_context="adhoc", debug=False)
+	app.run(ssl_context="adhoc", host='0.0.0.0', port=8080, debug=False)
