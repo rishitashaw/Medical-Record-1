@@ -18,7 +18,7 @@ import os
 import uuid
 
 url="medrecord.eastus.cloudapp.azure.com"
-filepth='E:/medrecords/'
+filepth='/home/vm_user/Medical-Record/medrecords/'
 
 createAllTables()
 
