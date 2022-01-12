@@ -245,7 +245,7 @@ def logout():
 	resp.set_cookie("type",'',expires=0)
 	return resp
 	
-@app.route("/clearcookies",method=["GET","POST"])
+@app.route("/clearcookies",methods=["GET","POST"])
 def clearcookies():
 	resp=make_response(redirect("/logout"))
 	resp.set_cookie("username",'',expires=0)
