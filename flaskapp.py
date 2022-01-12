@@ -97,7 +97,7 @@ def initlogin():
 	uname=request.cookies.get("username")
 	if not uname:
 		return render_template("username_setcookies.html")
-	else
+	else:
 		return redirect("/authenticate")
 
 @app.route("/setcookie", methods=["GET", "POST"])
