@@ -17,7 +17,7 @@ import random
 import os
 import uuid
 
-url="localhost"
+url="medrecord.eastus.cloudapp.azure.com"
 filepth='E:/medrecords/'
 
 createAllTables()
