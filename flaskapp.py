@@ -182,6 +182,9 @@ def uploaddone():
 	file=request.files['file']
 	file.save(filepth+"userfiles/"+fln)
 	addFile(uname,tname,tdate,upl,fln)
+	eml=getEmailFromUsername(uname)
+	nm=getNameFromUsername(uname)
+	sendEmailNotifAdd(eml,tname,tdate,upl,nm)
 	return redirect("/dashboard")
 
 @app.route("/filedownload", methods=["GET","POST"])
