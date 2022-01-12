@@ -1,0 +1,13 @@
+<html>
+<body>
+
+<h1>Verification</h1>
+<form action="/loginotpinp" method="post">
+  <label for="fname">Enter OTP sent to email:</label>
+  <input type="text" id="otp" name="otp"><br><br>
+  <input type="hidden" id="encotp" name="encotp" value="{{encotp}}">
+  <input type="hidden" id="encuname" name="encuname" value="{{encuname}}">
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>

@@ -253,6 +253,30 @@ def clearcookies():
 	resp=make_response(redirect("/logout"))
 	resp.set_cookie("username",'',expires=0)
 	return resp
+	
+@app.route("/loginotp", methods=["GET","POST"])
+def loginotp():
+	uname=request.args.get('uname')
+	eml=getEmailFromUsername(uname)
+	otp=genOtp()
+	encuname=encr(uname)
+	encotp=encr(otp)
+	sendEmail(eml,otp)
+	return render_template("loginotp.html",encotp=encotp,encuname=encuname)
+	
+@app.route("/loginotpinp", methods=["GET","POST"])
+def loginotpinp():
+	otp=decr(request.form['encotp'])
+	uname=decr(request.form['encuname'])
+	inpotp=request.form['otp'].strip()
+	if otp==inpotp:
+		encuname=encr(uname)
+		resp=make_response(redirect("/dashboard"))
+		resp.set_cookie("id",encuname)
+		resp.set_cookie("type","admin")
+		return resp
+	else:
+		return render_template("error.html", reason="Incorrect OTP")
 
 @app.route("/api/register/begin", methods=["GET","POST"])
 def register_begin():
