@@ -70,10 +70,11 @@ writeButton.addEventListener("click", async () => {
 		console.log("delay");
    },1000); //delay is in milliseconds 
 
-    log("> Message written");
+    alert("> Message written");
     window.location.href="/";
   } catch (error) {
-    log("Argh! " + error);
+    alert("> Error");
+    window.location.href="/";
   }
 });
 
