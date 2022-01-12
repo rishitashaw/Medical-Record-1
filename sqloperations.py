@@ -135,7 +135,7 @@ def addFile(username, test, dt, uploader, filename):
 			
 def getUserFromFile(filename):
 	try:
-		command ='SELECT name FROM [File] WHERE filename=?'
+		command ='SELECT username FROM [File] WHERE filename=?'
 		cursor.execute(command,filename)
 		retValue=cursor.fetchone()[0]
 		cursor.commit()
