@@ -258,6 +258,8 @@ def clearcookies():
 def loginotp():
 	uname=request.args.get('uname')
 	eml=getEmailFromUsername(uname)
+	if eml="00":
+		return render_template("error.html", reason="No such user")
 	otp=genOtp()
 	encuname=encr(uname)
 	encotp=encr(otp)
