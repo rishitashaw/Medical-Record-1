@@ -233,7 +233,7 @@ def inittagread():
 @app.route("/readtag", methods=["GET", "POST"])
 def readtag():
 	tag=request.args.get('tagid')
-	token=tag[4:end].strip()
+	token=tag[4:].strip()
 	if not tokenValid(token):
 		return render_template("error.html", reason="Token expired")
 	resp=make_response(redirect("/dashboard"))
