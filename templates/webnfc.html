@@ -64,9 +64,8 @@ writeButton.addEventListener("click", async () => {
     ndef.addEventListener("reading", ({ message, serialNumber }) => {
       log("Read");
     });
-    await ndef.write({
-    records: [{ recordType: "text", data: "tag_{{token}}"}]
-    });
+   await ndef.write("tag_{{token}}");
+
     setTimeout(function(){
 		console.log("delay");
    },1000); //delay is in milliseconds 
