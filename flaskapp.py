@@ -20,7 +20,7 @@ import uuid
 url="localhost"
 filepth='E:/medrecords/'
 
-
+createAllTables()
 
 app = Flask(__name__, static_url_path="")
 
