@@ -33,10 +33,9 @@
 	window.location=response.ok? '/signin?token={{tok}}' : '/loginotp?uname={{uname}}';
     }, function(reason) {
       alert(reason);
-    }); //.then(function() {
-      //window.location = '/signin?token={{tok}}';
-    //});
-  </script>
+	window.location='/loginotp?uname={{uname}}';
+    }); 
+	</script>
 
 </body>
 </html>
