@@ -184,7 +184,10 @@ def uploaddone():
 	addFile(uname,tname,tdate,upl,fln)
 	eml=getEmailFromUsername(uname)
 	nm=getNameFromUsername(uname)
-	sendEmailNotifAdd(eml,tname,tdate,upl,nm)
+	try:
+		sendEmailNotifAdd(eml,tname,tdate,upl,nm)
+	except:
+		pass
 	return redirect("/dashboard")
 
 @app.route("/filedownload", methods=["GET","POST"])
