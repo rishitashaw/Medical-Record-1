@@ -53,6 +53,17 @@ def getNameFromUsername(username):
 	except:
 		return "00"
 
+def getUserCount():
+	try:
+		command ='SELECT COUNT(*) FROM [User]'
+		cursor.execute(command)
+		retValue=cursor.fetchone()[0]
+		cursor.commit()
+		return retValue
+		 
+	except:
+		return "00"
+
 
 def createTagsTable():
 	try:
