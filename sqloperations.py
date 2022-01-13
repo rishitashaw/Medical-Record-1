@@ -17,9 +17,19 @@ def createUserTable():
 		pass
 
 def addUser(username, email, name):
-	command = 'INSERT INTO [User] VALUES (?,?,?)'	
-	cursor.execute(command,username,email,name)
-	cursor.commit()
+	try:
+		command = 'INSERT INTO [User] VALUES (?,?,?)'	
+		cursor.execute(command,username,email,name)
+		cursor.commit()
+	except:
+		createUserTable()
+		try:
+			command = 'INSERT INTO [User] VALUES (?,?,?)'	
+			cursor.execute(command,username,email,name)
+			cursor.commit()
+		except:
+			pass
+			
 	
 def getEmailFromUsername(username):
 	try:
