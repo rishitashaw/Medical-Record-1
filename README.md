@@ -10,7 +10,7 @@ and hence the patients will not have to go about the hospitals with an entire me
 
 1. [Aditya Mitra](http://github.com/AdityaMitra5102)
 2. [Rishita Shaw](http://github.com/theseregrets)
-3. [Anisha Ghosh](http://github.com/anisha100)
+3. [Anisha](http://github.com/)
 
 ## Objective
 
@@ -59,4 +59,5 @@ FAQ:
    computer with NFC reader is supposed to work. Some laptops have NFC readers inbuilt, as
    well as USB NFC readers are available.
 5. How will the reports be stored? – The reports will be stored as uploaded by the hospital in any
-   file. For the time being, we are only accepting PDF files for reports.
+   file. We are intentionally not enforcing any file format as some medical records need to be
+   stored as PDF, while some like the medical scans are stored as DICOM or other formats.
