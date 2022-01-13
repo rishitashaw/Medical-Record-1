@@ -54,7 +54,8 @@ def index():
 	type=request.cookies.get("type")
 	if type=="admin" or type=="user":
 		return redirect("/dashboard")
-	return render_template("index.html")
+	k=getUserCount()
+	return render_template("index.html",ucount=k)
     
     
 @app.route("/signup")
