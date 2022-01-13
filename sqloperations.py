@@ -145,7 +145,7 @@ def getUserFromFile(filename):
 	
 def getFileListFromUser(user):
 	try:
-		op='<table>\n'
+		op='\n'
 		op=op+'<tr>\n'
 		op=op+'<th>Test name</th>\n'
 		op=op+'<th>Test date</th>\n'
@@ -164,7 +164,7 @@ def getFileListFromUser(user):
 			op=op+'<td>'+i[2]+'</td>\n'
 			op=op+'<td><a href="/downloadfile?name='+i[3]+'">Download</a></td>\n'
 			op=op+"</tr>\n"
-		op=op+"</table>\n"
+		op=op+"\n"
 		return op
 	except:
 		return "Error"
