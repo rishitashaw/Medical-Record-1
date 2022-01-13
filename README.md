@@ -38,12 +38,12 @@ The website will have two versions:
    temporary tokens.
 
 ## Tech Stacks
-
+```bash
 Technologies to be used:
 • FIDO2 Specifications
 • Web NFC
 • Microsoft Azure.
-
+```
 ## FAQ
 
 FAQ:
