@@ -162,9 +162,11 @@ def getFileListFromUser(user):
 			op=op+'<td>'+i[0]+'</td>\n'
 			op=op+'<td>'+i[1]+'</td>\n'
 			op=op+'<td>'+i[2]+'</td>\n'
-			op=op+'<td><a href="/downloadfile?name='+i[3]+'">Download</a></td>\n'
+			op=op+'<td><a class="btn" href="/downloadfile?name='+i[3]+'">Download</a></td>\n'
 			op=op+"</tr>\n"
 		op=op+"\n"
+		if len(retValue) ==0:
+			op='<tr><th> No report available. </th></tr>'
 		return op
 	except:
 		return "Error"
