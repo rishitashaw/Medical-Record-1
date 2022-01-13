@@ -11,7 +11,7 @@ cursor=conn.cursor()
 
 def createUserTable():
 	try:
-		cursor.execute("CREATE TABLE [User](username VARCHAR(30) UNIQUE, email VARCHAR(30), name VARCHAR(30))")
+		cursor.execute("CREATE TABLE [User](username VARCHAR(100) UNIQUE, email VARCHAR(100), name VARCHAR(100))")
 		cursor.commit()
 	except:
 		pass
@@ -55,7 +55,7 @@ def getNameFromUsername(username):
 
 def createTagsTable():
 	try:
-		cursor.execute("CREATE TABLE [Tags](username VARCHAR(30), tagid VARCHAR(100) UNIQUE, name VARCHAR(30), expiry VARCHAR(30))")
+		cursor.execute("CREATE TABLE [Tags](username VARCHAR(100), tagid VARCHAR(100) UNIQUE, name VARCHAR(100), expiry VARCHAR(100))")
 		cursor.commit()
 	except:
 		pass
@@ -114,7 +114,7 @@ def deleteTag(tagid):
 		
 def createFileTable():
 	try:
-		cursor.execute("CREATE TABLE [File](username VARCHAR(30), test VARCHAR(30), dt VARCHAR(30), uploader VARCHAR(30), filename VARCHAR(100) UNIQUE)")
+		cursor.execute("CREATE TABLE [File](username VARCHAR(100), test VARCHAR(100), dt VARCHAR(100), uploader VARCHAR(100), filename VARCHAR(100) UNIQUE)")
 		cursor.commit()
 	except:
 		pass
