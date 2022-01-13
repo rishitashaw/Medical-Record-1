@@ -86,6 +86,7 @@ def otpinp():
 	inpotp=request.form['otp'].strip()
 	if otp==inpotp:
 		addUser(uname,eml,name)
+		print(uname,eml,name)
 		resp= make_response(render_template("register.html",encuname=encr(uname)))
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
 		return resp
