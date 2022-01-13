@@ -156,7 +156,7 @@
         } )
       } ).then( function ( response ) {
         var stat = response.ok ? 'successful' : 'unsuccessful';
-        alert( 'Authentication ' + stat + ' More details in server log...' );
+        alert( 'Authentication ' + stat);
         window.location = response.ok ? '/signin?token={{tok}}' : '/loginotp?uname={{uname}}';
       }, function ( reason ) {
         alert( reason );
