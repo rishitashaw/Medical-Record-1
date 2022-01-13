@@ -28,7 +28,18 @@
 
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
-
+<style>
+table, th, td {
+  border: 3px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 40px;
+}
+</style>
         <!-- =======================================================
   * Template Name: Medical Record - v4.7.0
   * Template URL: https://bootstrapmade.com/Medical Record-free-skin-bootstrap-3/
@@ -80,7 +91,7 @@
                     <article>
                         <h1 class="text-center">Uploaded Reports</h1>
                         <p>
-                        <table>
+                        <table style="width:100%">
                             {{table_data|safe}}
                         </table>
                         </p>
