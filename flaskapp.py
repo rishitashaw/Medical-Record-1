@@ -154,8 +154,12 @@ def dashboard():
 	if type=="admin":
 		return render_template("dashboard_admin.html")
 	if type=="user":
-		return render_template("dashboard_user.html")
-	return render_template("error.html", reason="Cookies error")
+		token=request.cookies.get("id")
+		if not tokenValid(token):
+			return render_template("error.html", reason="Token expired")
+		exp=getExpiryFromTag(token)
+		return render_template("dashboard_user.html", expiry=exp)
+	return redirect("/")
 
 @app.route("/fileupload", methods=["GET", "POST"])
 def fileupload():
