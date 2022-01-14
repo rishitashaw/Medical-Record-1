@@ -4,7 +4,12 @@ clear
 cd ~
 rm -rf Medical-Record
 git clone https://github.com/AdityaMitra5102/Medical-Record
-cd Medical-Record
+mkdir medrecords
+cd medrecords
+mkdir appfiles
+mkdir cryptofiles
+mkdir userfiles
+cd ~
 chmod -R 777 medrecords
 sudo rm /var/log/apache2/error.log
 sudo rm /var/log/apache2/access.log
