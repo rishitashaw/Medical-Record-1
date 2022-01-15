@@ -244,9 +244,7 @@ def downloadfile():
 	
 @app.route("/inittagread", methods=["GET","POST"])
 def inittagread():
-	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
-		return render_template("webnfc.html", scanbuttonparam="", writebuttonparam="hidden", token="Null")
-	return redirect("/")
+	return render_template("webnfc.html", scanbuttonparam="", writebuttonparam="hidden", token="Null")
 	
 @app.route("/readtag", methods=["GET", "POST"])
 def readtag():
