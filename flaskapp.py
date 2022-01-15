@@ -400,9 +400,12 @@ def tokenValid(token):
 	return k
 
 def checkValidCookie(id, ip):
-	token=decr(id)
-	arr=token.split()
-	return arr[1]==ip
+	try:
+		token=decr(id)
+		arr=token.split()
+		return arr[1]==ip
+	except:
+		return False
 	
 def getIdFromCookie(id):
 	token=decr(id)
