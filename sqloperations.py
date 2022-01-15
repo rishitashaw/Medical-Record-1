@@ -32,7 +32,7 @@ def addUser(username, email, name, fln):
 
 def getFileFromUsername(username):
 	try:
-		command ='SELECT file FROM [User] WHERE username=?'
+		command ='SELECT fln FROM [User] WHERE username=?'
 		cursor.execute(command,username)
 		retValue=cursor.fetchone()[0]
 		cursor.commit()
