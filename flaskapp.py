@@ -304,6 +304,30 @@ def loginotpinp():
 	else:
 		return render_template("error.html", reason="Incorrect OTP")
 
+@app.route("/api/register/beginplatform", methods=["GET","POST"])
+def register_begin_platform():
+    encuname=request.args.get('uname')
+    uname=decr(encuname)
+    credentials=read_key(uname)
+    registration_data, state = server.register_begin(
+        {
+            "id": b"user_id",
+            "name": uname,
+            "displayName": uname,
+            "icon": "https://example.com/image.png",
+        },
+        credentials,
+        user_verification="discouraged",
+        authenticator_attachment="platform",
+    )
+
+    session["state"] = state
+    print("\n\n\n\n")
+    print(registration_data)
+    print("\n\n\n\n")
+    return cbor.encode(registration_data)
+
+	
 @app.route("/api/register/begin", methods=["GET","POST"])
 def register_begin():
     encuname=request.args.get('uname')
