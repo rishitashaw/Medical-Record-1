@@ -172,7 +172,7 @@ def uploaddone():
 	upl="00"
 	if type=="admin":
 		uname=decr(request.cookies.get("id"))
-		upl=uname
+		upl=getNameFromUsername(uname)
 	if type=="user":
 		token=request.cookies.get("id")
 		if not tokenValid(token):
