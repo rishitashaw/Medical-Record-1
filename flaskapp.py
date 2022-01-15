@@ -408,7 +408,7 @@ def getIdFromCookie(id):
 	arr=token.split()
 	return arr[0]
 
-def isValidEmail(eml):
+def isValidEmail(email):
 	return re.match(regex,email)
     
 def encr(wrd):
