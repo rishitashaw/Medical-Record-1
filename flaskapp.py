@@ -409,7 +409,7 @@ def getIdFromCookie(id):
 	return arr[0]
 
 def isValidEmail(eml):
-	return re.fullmatch(regex,email)
+	return re.match(regex,email)
     
 def encr(wrd):
 	return f1.encrypt(wrd.encode()).decode()
