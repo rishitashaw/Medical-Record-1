@@ -69,8 +69,10 @@ def signupresp():
 	name=request.form['name'].strip()
 	uname=request.form['uname'].strip()
 	eml=request.form['eml'].strip()
-	if not (isalnum(uname) and isValidEmail(eml)):
-		return render_template("error.html", reason="Username should be alphanumeric and email should be valid")
+	if not uname.isalnum():
+		return render_template("error.html", reason="Username should be alphanumeric")
+	if not isValidEmail(eml)):
+		return render_template("error.html", reason="Invalid email")
 	em2=getEmailFromUsername(uname)
 	if not em2=="00":
 		return render_template("error.html", reason="Username already exists")
