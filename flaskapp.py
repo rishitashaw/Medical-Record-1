@@ -121,7 +121,7 @@ def signin():
 	uname=getUsernameFromToken(token)
 	deleteToken(token)
 	uname=uname
-	encuname=encr(uname)
+	encuname=encr(uname+' '+request.remote_addr)
 	resp=make_response(redirect("/dashboard"))
 	resp.set_cookie("id",encuname)
 	resp.set_cookie("type","admin")
@@ -129,115 +129,124 @@ def signin():
 
 @app.route("/tagreg", methods=["GET","POST"])
 def tagreg():
-	return render_template("tagreg.html")
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		return render_template("tagreg.html")
+	return redirect("/")
 	
 @app.route("/inittag", methods=["GET", "POST"])
 def inittag():
-	uname=decr(request.cookies.get("id"))
-	exp=request.form['exp'].strip()
-	iname=request.form['iname'].strip()
-	tagid=uuid.uuid4()
-	addTag(uname,tagid,iname,exp)
-	return render_template("webnfc.html", scanbuttonparam="hidden", writebuttonparam="", token=tagid)
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		uname=getIdFromCookie(request.cookies.get("id"))
+		exp=request.form['exp'].strip()
+		iname=request.form['iname'].strip()
+		tagid=uuid.uuid4()
+		addTag(uname,tagid,iname,exp)
+		return render_template("webnfc.html", scanbuttonparam="hidden", writebuttonparam="", token=tagid)
+	return redirect("/")
 	
 @app.route("/fidoreg", methods=["GET","POST"])
 def fidoreg():
-	encuname=request.cookies.get("id")
-	uname=decr(encuname)
-	resp= make_response(render_template("register.html",encuname=encr(uname)))
-	resp.set_cookie("username",uname,max_age=60*60*24*365*50)
-	return resp
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		uname=getIdFromCookie(request.cookies.get("id"))
+		resp= make_response(render_template("register.html",encuname=encr(uname)))
+		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
+		return resp
+	return redirect("/")
 	
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-	type=request.cookies.get('type')
-	if type=="admin":
-		return render_template("dashboard_admin.html")
-	if type=="user":
-		token=request.cookies.get("id")
-		if not tokenValid(token):
-			return render_template("error.html", reason="Token expired")
-		exp=getExpiryFromTag(token)
-		return render_template("dashboard_user.html", expiry=exp)
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		type=request.cookies.get('type')
+		if type=="admin":
+			return render_template("dashboard_admin.html")
+		if type=="user":
+			token=getIdFromCookie(request.cookies.get("id"))
+			if not tokenValid(token):
+				return render_template("error.html", reason="Token expired")
+			exp=getExpiryFromTag(token)
+			return render_template("dashboard_user.html", expiry=exp)
 	return redirect("/")
 
 @app.route("/fileupload", methods=["GET", "POST"])
 def fileupload():
-	return render_template("fileupload.html")
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		return render_template("fileupload.html")
+	return redirect("/")	
 	
 @app.route("/uploaddone", methods=["GET", "POST"])
 def uploaddone():
-	type=request.cookies.get('type')
-	uname="00"
-	upl="00"
-	if type=="admin":
-		uname=decr(request.cookies.get("id"))
-		upl=getNameFromUsername(uname)
-	if type=="user":
-		token=request.cookies.get("id")
-		if not tokenValid(token):
-			return render_template("error.html", reason="Token expired")
-		uname=getUsernameFromTag(token)
-		upl=getNameFromTag(token)
-	fln=str(uuid.uuid4())
-	fln=fln+'.pdf'
-	if 'file' not in request.files:
-		return render_template("error.html", reason="File error")
-	tname=request.form['tname']
-	tdate=request.form['tdate']
-	file=request.files['file']
-	file.save(filepth+"userfiles/"+fln)
-	addFile(uname,tname,tdate,upl,fln)
-	eml=getEmailFromUsername(uname)
-	nm=getNameFromUsername(uname)
-	try:
-		sendEmailNotifAdd(eml,tname,tdate,upl,nm)
-	except:
-		pass
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		type=request.cookies.get('type')
+		uname="00"
+		upl="00"
+		if type=="admin":
+			uname=getIdFromCookie(request.cookies.get("id"))
+			upl=getNameFromUsername(uname)
+		if type=="user":
+			token=getIdFromCookie(request.cookies.get("id"))
+			if not tokenValid(token):
+				return render_template("error.html", reason="Token expired")
+			uname=getUsernameFromTag(token)
+			upl=getNameFromTag(token)
+		fln=str(uuid.uuid4())
+		fln=fln+'.pdf'
+		if 'file' not in request.files:
+			return render_template("error.html", reason="File error")
+		tname=request.form['tname']
+		tdate=request.form['tdate']
+		file=request.files['file']
+		file.save(filepth+"userfiles/"+fln)
+		addFile(uname,tname,tdate,upl,fln)
+		eml=getEmailFromUsername(uname)
+		nm=getNameFromUsername(uname)
+		try:
+			sendEmailNotifAdd(eml,tname,tdate,upl,nm)
+		except:
+			pass
 	return redirect("/dashboard")
 
 @app.route("/filedownload", methods=["GET","POST"])
 def filedownload():
-	type=request.cookies.get('type')
-	uname="00"
-	if type=="admin":
-		uname=decr(request.cookies.get("id"))
-		print(uname, "admin")
-	if type=="user":
-		token=request.cookies.get("id")
-		if not tokenValid(token):
-			return render_template("error.html", reason="Token expired")
-		uname=getUsernameFromTag(token)
-	print(uname)
-	tabdata=getFileListFromUser(uname)
-	try:
-		em=getEmailFromUsername(uname)
-		name=getNameFromUsername(uname)
-		sendEmailNotifAdd(em,tname,tdate,upl,name)
-	except:
-		pass
-	return render_template("filedownload.html",table_data=tabdata)
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		type=request.cookies.get('type')
+		uname="00"
+		if type=="admin":
+			uname=getIdFromCookie(request.cookies.get("id"))
+			print(uname, "admin")
+		if type=="user":
+			token=getIdFromCookie(request.cookies.get("id"))
+			if not tokenValid(token):
+				return render_template("error.html", reason="Token expired")
+			uname=getUsernameFromTag(token)
+		print(uname)
+		tabdata=getFileListFromUser(uname)
+		return render_template("filedownload.html",table_data=tabdata)
+	return redirect("/")
 
 @app.route("/downloadfile", methods=["GET","POST"])
 def downloadfile():
-	uname="00"
-	type=request.cookies.get('type')
-	if type=="admin":
-		uname=decr(request.cookies.get("id"))
-	if type=="user":
-		token=request.cookies.get("id")
-		if not tokenValid(token):
-			return render_template("error.html", reason="Token expired")
-		uname=getUsernameFromTag(token)
-	fln=request.args.get('name')
-	uname2=getUserFromFile(fln)
-	if not uname==uname2:
-		return render_template("error.html", reason="Unauthorized access")
-	return send_file(filepth+"userfiles/"+fln, as_attachment=True)
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		uname="00"
+		type=request.cookies.get('type')
+		if type=="admin":
+			uname=getIdFromCookie(request.cookies.get("id"))
+		if type=="user":
+			token=getIdFromCookie(request.cookies.get("id"))
+			if not tokenValid(token):
+				return render_template("error.html", reason="Token expired")
+			uname=getUsernameFromTag(token)
+		fln=request.args.get('name')
+		uname2=getUserFromFile(fln)
+		if not uname==uname2:
+			return render_template("error.html", reason="Unauthorized access")
+		return send_file(filepth+"userfiles/"+fln, as_attachment=True)
+	return redirect("/")
 	
 @app.route("/inittagread", methods=["GET","POST"])
 def inittagread():
-	return render_template("webnfc.html", scanbuttonparam="", writebuttonparam="hidden", token="Null")
+	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+		return render_template("webnfc.html", scanbuttonparam="", writebuttonparam="hidden", token="Null")
+	return redirect("/")
 	
 @app.route("/readtag", methods=["GET", "POST"])
 def readtag():
@@ -245,8 +254,9 @@ def readtag():
 	token=tag[4:].strip()
 	if not tokenValid(token):
 		return render_template("error.html", reason="Token expired")
+	tok=encr(token+' '+request.remote_addr)
 	resp=make_response(redirect("/dashboard"))
-	resp.set_cookie("id",token)
+	resp.set_cookie("id",tok)
 	resp.set_cookie("type","user")
 	return resp
 
@@ -281,7 +291,7 @@ def loginotpinp():
 	uname=decr(request.form['encuname'])
 	inpotp=request.form['otp'].strip()
 	if otp==inpotp:
-		encuname=encr(uname)
+		encuname=encr(uname+' '+request.remote_addr)
 		resp=make_response(redirect("/dashboard"))
 		resp.set_cookie("id",encuname)
 		resp.set_cookie("type","admin")
@@ -384,6 +394,15 @@ def tokenValid(token):
 		deleteTag(token)
 	return k
 
+def checkValidCookie(id, ip):
+	token=decr(id)
+	arr=token.split()
+	return arr[1]==ip
+	
+def getIdFromCookie(id):
+	token=decr(id)
+	arr=token.split()
+	return arr[0]
     
 def encr(wrd):
 	return f1.encrypt(wrd.encode()).decode()
