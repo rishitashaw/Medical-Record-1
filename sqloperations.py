@@ -11,15 +11,15 @@ cursor=conn.cursor()
 
 def createUserTable():
 	try:
-		cursor.execute("CREATE TABLE [User](username VARCHAR(100) UNIQUE, email VARCHAR(100), name VARCHAR(100))")
+		cursor.execute("CREATE TABLE [User](username VARCHAR(100) UNIQUE, email VARCHAR(100), name VARCHAR(100), file VARCHAR(100))")
 		cursor.commit()
 	except:
 		pass
 
-def addUser(username, email, name):
+def addUser(username, email, name, file):
 	try:
-		command = 'INSERT INTO [User] VALUES (?,?,?)'	
-		cursor.execute(command,username,email,name)
+		command = 'INSERT INTO [User] VALUES (?,?,?,?)'	
+		cursor.execute(command,username,email,name,file)
 		cursor.commit()
 	except:
 		createUserTable()
@@ -29,7 +29,16 @@ def addUser(username, email, name):
 			cursor.commit()
 		except:
 			pass
-			
+
+def getFileFromUsername(username):
+	try:
+		command ='SELECT file FROM [User] WHERE username=?'
+		cursor.execute(command,username)
+		retValue=cursor.fetchone()[0]
+		cursor.commit()
+		return retValue		 
+	except:
+		return "00"		
 	
 def getEmailFromUsername(username):
 	try:
@@ -37,8 +46,7 @@ def getEmailFromUsername(username):
 		cursor.execute(command,username)
 		retValue=cursor.fetchone()[0]
 		cursor.commit()
-		return retValue
-		 
+		return retValue		 
 	except:
 		return "00"
 		
