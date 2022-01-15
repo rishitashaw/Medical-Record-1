@@ -423,13 +423,13 @@ def decr(tok):
 
 def save_key(uname, credentials):
 	fln=getFileFromUsername(uname)
-	with open(filepth+'cryptofiles/'+fln+'datafilekey.pkl','wb') as outp1:
+	with open(filepth+'cryptofiles/'+fln+'.pkl','wb') as outp1:
 		pickle.dump(credentials,outp1,pickle.HIGHEST_PROTOCOL)
 		
 def read_key(uname):
 	try:
 		fln=getFileFromUsername(uname)
-		with open(filepth+'cryptofiles/'+fln+'datafilekey.pkl', 'rb') as inp:
+		with open(filepth+'cryptofiles/'+fln+'.pkl', 'rb') as inp:
 			temp = pickle.load(inp)
 			return temp
 	except:
