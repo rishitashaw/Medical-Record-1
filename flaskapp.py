@@ -92,7 +92,8 @@ def otpinp():
 	eml=decr(request.form['enceml'])
 	inpotp=request.form['otp'].strip()
 	if otp==inpotp:
-		addUser(uname,eml,name)
+		fln=str(uuid.uuid4())
+		addUser(uname,eml,name,fln)
 		print(uname,eml,name)
 		resp= make_response(render_template("register.html",encuname=encr(uname)))
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
@@ -418,12 +419,14 @@ def decr(tok):
 	return f1.decrypt(tok.encode()).decode()
 
 def save_key(uname, credentials):
-	with open(filepth+'cryptofiles/'+uname+'datafilekey.pkl','wb') as outp1:
+	fln=getFileFromUsername(uname)
+	with open(filepth+'cryptofiles/'+fln+'datafilekey.pkl','wb') as outp1:
 		pickle.dump(credentials,outp1,pickle.HIGHEST_PROTOCOL)
 		
 def read_key(uname):
 	try:
-		with open(filepth+'cryptofiles/'+uname+'datafilekey.pkl', 'rb') as inp:
+		fln=getFileFromUsername(uname)
+		with open(filepth+'cryptofiles/'+fln+'datafilekey.pkl', 'rb') as inp:
 			temp = pickle.load(inp)
 			return temp
 	except:
