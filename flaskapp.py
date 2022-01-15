@@ -16,9 +16,11 @@ import string
 import random
 import os
 import uuid
+import re
 
 url="medrecord.eastus.cloudapp.azure.com"
 filepth='/home/vm_user/medrecords/'
+regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
 createAllTables()
 
@@ -67,9 +69,11 @@ def signupresp():
 	name=request.form['name'].strip()
 	uname=request.form['uname'].strip()
 	eml=request.form['eml'].strip()
+	if not (isalnum(uname) and isValidEmail(eml)):
+		return render_template("error.html", reason="Username should be alphanumeric and email should be valid")
 	em2=getEmailFromUsername(uname)
 	if not em2=="00":
-		return render_template("error.html", reason="Username already exists");
+		return render_template("error.html", reason="Username already exists")
 	otp=genOtp()
 	encname=encr(name)
 	encuname=encr(uname)
@@ -401,6 +405,9 @@ def getIdFromCookie(id):
 	token=decr(id)
 	arr=token.split()
 	return arr[0]
+
+def isValidEmail(eml):
+	return re.fullmatch(regex,email)
     
 def encr(wrd):
 	return f1.encrypt(wrd.encode()).decode()
