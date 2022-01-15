@@ -75,7 +75,7 @@ def getUserCount():
 
 def createTagsTable():
 	try:
-		cursor.execute("CREATE TABLE [Tags](username VARCHAR(100), tagid VARCHAR(100) UNIQUE, name VARCHAR(100), expiry VARCHAR(100))")
+		cursor.execute("CREATE TABLE [Tags](username VARCHAR(50), tagid VARCHAR(50) UNIQUE, name VARCHAR(50), expiry VARCHAR(50))")
 		cursor.commit()
 	except:
 		pass
@@ -134,7 +134,7 @@ def deleteTag(tagid):
 		
 def createFileTable():
 	try:
-		cursor.execute("CREATE TABLE [File](username VARCHAR(100), test VARCHAR(100), dt VARCHAR(100), uploader VARCHAR(100), filename VARCHAR(100) UNIQUE)")
+		cursor.execute("CREATE TABLE [File](username VARCHAR(50), test VARCHAR(50), dt VARCHAR(50), uploader VARCHAR(50), filename VARCHAR(50) UNIQUE)")
 		cursor.commit()
 	except:
 		pass
@@ -194,7 +194,7 @@ def getFileListFromUser(user):
 
 def createAuthTable():
 	try:
-		cursor.execute("CREATE TABLE [Auth](username VARCHAR(30), token VARCHAR(100) UNIQUE)")
+		cursor.execute("CREATE TABLE [Auth](username VARCHAR(30), token VARCHAR(50) UNIQUE)")
 		cursor.commit()
 	except:
 		pass
