@@ -129,13 +129,13 @@ def signin():
 
 @app.route("/tagreg", methods=["GET","POST"])
 def tagreg():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		return render_template("tagreg.html")
 	return redirect("/")
 	
 @app.route("/inittag", methods=["GET", "POST"])
 def inittag():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname=getIdFromCookie(request.cookies.get("id"))
 		exp=request.form['exp'].strip()
 		iname=request.form['iname'].strip()
@@ -146,7 +146,7 @@ def inittag():
 	
 @app.route("/fidoreg", methods=["GET","POST"])
 def fidoreg():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname=getIdFromCookie(request.cookies.get("id"))
 		resp= make_response(render_template("register.html",encuname=encr(uname)))
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
@@ -155,7 +155,7 @@ def fidoreg():
 	
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		type=request.cookies.get('type')
 		if type=="admin":
 			return render_template("dashboard_admin.html")
@@ -169,13 +169,13 @@ def dashboard():
 
 @app.route("/fileupload", methods=["GET", "POST"])
 def fileupload():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		return render_template("fileupload.html")
 	return redirect("/")	
 	
 @app.route("/uploaddone", methods=["GET", "POST"])
 def uploaddone():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		type=request.cookies.get('type')
 		uname="00"
 		upl="00"
@@ -207,7 +207,7 @@ def uploaddone():
 
 @app.route("/filedownload", methods=["GET","POST"])
 def filedownload():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		type=request.cookies.get('type')
 		uname="00"
 		if type=="admin":
@@ -225,7 +225,7 @@ def filedownload():
 
 @app.route("/downloadfile", methods=["GET","POST"])
 def downloadfile():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname="00"
 		type=request.cookies.get('type')
 		if type=="admin":
@@ -244,7 +244,7 @@ def downloadfile():
 	
 @app.route("/inittagread", methods=["GET","POST"])
 def inittagread():
-	if checkValidCookie(request.cookies.get('id'),request.remode_addr):
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		return render_template("webnfc.html", scanbuttonparam="", writebuttonparam="hidden", token="Null")
 	return redirect("/")
 	
