@@ -159,7 +159,17 @@ def fidoreg():
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
 		return resp
 	return redirect("/")
-	
+
+@app.route("/fidoregplatform", methods=["GET","POST"])
+def fidoregplatform():
+	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
+		uname=getIdFromCookie(request.cookies.get("id"))
+		resp= make_response(render_template("register_platform.html",encuname=encr(uname)))
+		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
+		return resp
+	return redirect("/")
+
+
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
