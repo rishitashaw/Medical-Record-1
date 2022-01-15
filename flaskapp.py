@@ -165,7 +165,7 @@ def dashboard():
 				return render_template("error.html", reason="Token expired")
 			exp=getExpiryFromTag(token)
 			return render_template("dashboard_user.html", expiry=exp)
-	return redirect("/")
+	return redirect("/logout")
 
 @app.route("/fileupload", methods=["GET", "POST"])
 def fileupload():
