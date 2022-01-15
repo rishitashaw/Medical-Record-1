@@ -11,15 +11,15 @@ cursor=conn.cursor()
 
 def createUserTable():
 	try:
-		cursor.execute("CREATE TABLE [User](username VARCHAR(100) UNIQUE, email VARCHAR(100), name VARCHAR(100), file VARCHAR(100))")
+		cursor.execute("CREATE TABLE [User](username VARCHAR(100) UNIQUE, email VARCHAR(100), name VARCHAR(100), fln VARCHAR(100))")
 		cursor.commit()
 	except:
 		pass
 
-def addUser(username, email, name, file):
+def addUser(username, email, name, fln):
 	try:
 		command = 'INSERT INTO [User] VALUES (?,?,?,?)'	
-		cursor.execute(command,username,email,name,file)
+		cursor.execute(command,username,email,name,fln)
 		cursor.commit()
 	except:
 		createUserTable()
