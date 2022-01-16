@@ -183,7 +183,7 @@ def dashboard():
 			if not tokenValid(token):
 				return render_template("error.html", reason="Token expired")
 			uname=getUsernameFromTag(token)
-			name=getNamefromUsename(uname)
+			name=getNamefromUsername(uname)
 			exp=getExpiryFromTag(token)
 			hname=getNameFromToken(token)
 			return render_template("dashboard_user.html", name=name,expiry=exp,hname=hname)
