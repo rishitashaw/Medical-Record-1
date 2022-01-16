@@ -185,7 +185,7 @@ def dashboard():
 			uname=getUsernameFromTag(token)
 			name=getNameFromUsername(uname)
 			exp=getExpiryFromTag(token)
-			hname=getNameFromToken(token)
+			hname=getNameFromTag(token)
 			return render_template("dashboard_user.html", name=name,expiry=exp,hname=hname)
 	return redirect("/logout")
 
