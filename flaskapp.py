@@ -175,13 +175,18 @@ def dashboard():
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		type=request.cookies.get('type')
 		if type=="admin":
-			return render_template("dashboard_admin.html")
+			uname=getIdFromCookie(request.cookies.get("id"))
+			name=getNameFromUsername(uname)
+			return render_template("dashboard_admin.html", name=name)
 		if type=="user":
 			token=getIdFromCookie(request.cookies.get("id"))
 			if not tokenValid(token):
 				return render_template("error.html", reason="Token expired")
+			uname=getUsernameFromTag(token)
+			name=getNamefromUsename(uname)
 			exp=getExpiryFromTag(token)
-			return render_template("dashboard_user.html", expiry=exp)
+			hname=getNameFromToken(token)
+			return render_template("dashboard_user.html", name=name,expiry=exp,hname=hname)
 	return redirect("/logout")
 
 @app.route("/fileupload", methods=["GET", "POST"])
