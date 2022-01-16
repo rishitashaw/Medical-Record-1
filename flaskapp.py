@@ -210,7 +210,7 @@ def uploaddone():
 		tname=request.form['tname']
 		tdate=request.form['tdate']
 		file=request.files['file']
-		uplflnext=path.splittext(file.filename)[1]
+		uplflnext=path.splitext(file.filename)[1]
 		if not (uplflnext=='.pdf' or uplflnext=='.xml'):
 			return render_template("error.html", reason="Unsupported file")
 		fln=str(uuid.uuid4())
@@ -238,7 +238,7 @@ def apiupload():
 	nm=getNameFromUsername(uname)
 	eml=getEmailFromUsername(uname)
 	file=request.files['file']
-	uplflnext=path.splittext(file.filename)[1]
+	uplflnext=path.splitext(file.filename)[1]
 	if not (uplflnext=='.pdf' or uplflnext=='.xml'):
 		return "Unsupported file"
 	fln=str(uuid.uuid4())
