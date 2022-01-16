@@ -36,6 +36,10 @@ The website will have two versions:
 2. Hospital version: This has only the options to view and add records. The hospital will not be
    authorized to manage tokens and keys. It is to be noted that the hospital can login only with
    temporary tokens.
+3. For medical equipments: We provide an API endpoint with which medical devices and softwares 
+   will be able to directly upload the report against an user. It is to be noted that the medical 
+   equipments should preferably be interfaced with a NFC reader as the API endpoint authenticates 
+   the device with it only. API Documentation [here](./apidoc.md)
 
 ## Tech Stacks
 ```bash
