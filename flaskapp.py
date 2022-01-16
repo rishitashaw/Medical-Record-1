@@ -205,13 +205,16 @@ def uploaddone():
 				return render_template("error.html", reason="Token expired")
 			uname=getUsernameFromTag(token)
 			upl=getNameFromTag(token)
-		fln=str(uuid.uuid4())
-		fln=fln+'.pdf'
 		if 'file' not in request.files:
 			return render_template("error.html", reason="File error")
 		tname=request.form['tname']
 		tdate=request.form['tdate']
 		file=request.files['file']
+		uplflnext=path.splittext(file.filename)[1]
+		if not (uplflnext=='.pdf' or uplflnext=='.xml'):
+			return render_template("error.html", reason="Unsupported file")
+		fln=str(uuid.uuid4())
+		fln=fln+uplflnext
 		file.save(filepth+"userfiles/"+fln)
 		addFile(uname,tname,tdate,upl,fln)
 		eml=getEmailFromUsername(uname)
@@ -221,7 +224,33 @@ def uploaddone():
 		except:
 			pass
 	return redirect("/dashboard")
-
+	
+@app.route("/api/reportupload", methods=["GET", "POST"])
+def apiupload():
+	token=request.form['tag']
+	token=tag[4:].strip()
+	if not tokenValid(token):
+		return "Token expired"
+	tname=request.form['testname']
+	tdate=request.form['testdate']
+	uname=uname=getUsernameFromTag(token)
+	upl=getNameFromTag(token)
+	nm=getNameFromUsername(uname)
+	eml=getEmailFromUsername(uname)
+	file=request.files['file']
+	uplflnext=path.splittext(file.filename)[1]
+	if not (uplflnext=='.pdf' or uplflnext=='.xml'):
+		return "Unsupported file"
+	fln=str(uuid.uuid4())
+	fln=fln+uplflnext
+	file.save(filepth+"userfiles/"+fln)
+	addFile(uname,tname,tdate,upl,fln)
+	try:
+		sendEmailNotifAdd(eml,tname,tdate,upl,nm)
+	except:
+		pass
+	return "File uploaded"
+	
 @app.route("/filedownload", methods=["GET","POST"])
 def filedownload():
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
