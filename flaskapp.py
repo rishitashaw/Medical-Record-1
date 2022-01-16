@@ -227,7 +227,7 @@ def uploaddone():
 	
 @app.route("/api/reportupload", methods=["GET", "POST"])
 def apiupload():
-	token=request.form['tag']
+	tag=request.form['tag']
 	token=tag[4:].strip()
 	if not tokenValid(token):
 		return "Token expired"
