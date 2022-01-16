@@ -215,6 +215,8 @@ def uploaddone():
 			return render_template("error.html", reason="Unsupported file")
 		fln=str(uuid.uuid4())
 		fln=fln+uplflnext
+		if not uplDateValid(tdate):
+			return render_template("error.html", reason="Invalid test date")
 		file.save(filepth+"userfiles/"+fln)
 		addFile(uname,tname,tdate,upl,fln)
 		eml=getEmailFromUsername(uname)
@@ -233,6 +235,8 @@ def reportupload():
 		return "Token expired"
 	tname=request.form['testname']
 	tdate=request.form['testdate']
+	if not uplDateValid(tdate):
+		return "Invalid test date"
 	uname=uname=getUsernameFromTag(token)
 	upl=getNameFromTag(token)
 	nm=getNameFromUsername(uname)
@@ -461,6 +465,17 @@ def tokenValid(token):
 	if not k:
 		deleteTag(token)
 	return k
+
+def uplDateValid(upldt):
+	try:
+		now=datetime.now()
+		dtm=now.strftime("%Y-%m-%d")
+		currdt=datetime.strptime(dtm, "%Y-%m-%d")
+		upldt=datetime.strptime(upldt, "%Y-%m-%d")
+		k=currdt>=upldt
+		return k
+	except:
+		return False
 
 def checkValidCookie(id, ip):
 	try:
