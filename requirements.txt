@@ -5,3 +5,4 @@ flask
 pickle-mixin
 uuid
 secure-smtplib
+pyre2
