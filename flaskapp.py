@@ -225,7 +225,7 @@ def uploaddone():
 			pass
 	return redirect("/dashboard")
 	
-@app.route("/reportupload", methods=["GET", "POST"])
+@app.route("/api/reportupload", methods=["GET", "POST"])
 def reportupload():
 	tag=request.form['tag']
 	token=tag[4:].strip()
