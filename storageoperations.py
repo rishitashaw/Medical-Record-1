@@ -20,7 +20,7 @@ def getDownloadLink(fln):
     permission=ContainerSasPermissions(read=True),
     expiry=datetime.utcnow() + timedelta(hours=1)
   )
-  blob_url_with_sas="https://medrecordfiles.blob.core.windows.net/userfiles/"+fln+"?"+blob_sas_token
+  blob_url_with_sas="https://medrecordfiles.blob.core.windows.net/userfiles/"+fln+"?sv="+blob_sas_token
   return blob_url_with_sas
 
 def uploadCryptoFile(data,fln):
