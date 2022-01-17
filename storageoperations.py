@@ -3,7 +3,7 @@ connect_str='DefaultEndpointsProtocol=https;AccountName=medrecordfiles;AccountKe
 blob_service_client = BlobServiceClient.from_connection_string(connect_str)
 
 cryptocontainer=blob_service_client.get_container_client('cryptofiles')
-usercontainer=blob_servoce_client.get_container_client('userfiles')
+usercontainer=blob_service_client.get_container_client('userfiles')
 
 def uploadUserFileToBlob(data, fln):
   blob_client = blob_service_client.get_blob_client(container='userfiles', blob=fln)
