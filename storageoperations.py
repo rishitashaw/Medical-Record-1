@@ -12,11 +12,15 @@ def uploadUserFileToBlob(data, fln):
   blob_client.upload_blob(data)
   
 def getDownloadLink(fln):
-  block_blob_service = BaseBlobService(account_name='medrecordfiles', account_key='EbVY4ZM3XNywbJbeR6yDFCjJILD5Nqla3EPI7CU+B1QAXjk1wwstYTVPsxA1wyPuSBTGiO8d+uDBhg4Wa26yxw==')
-  sas_url = block_blob_service.generate_blob_shared_access_signature('userfiles',fln,permission=BlobPermissions.READ,expiry= datetime.utcnow() + timedelta(hours=1))
-  print('https://medrecordfiles.blob.core.windows.net/userfiles/'+fln+'?'+sas_url)
-  return 'https://medrecordfiles.blob.core.windows.net/userfiles/'+fln+'?'+sas_url
-
+  sas_blob = generate_blob_sas(account_name='medrecordfiles', 
+                                container_name='userfiles',
+                                blob_name=fln,
+                                account_key='EbVY4ZM3XNywbJbeR6yDFCjJILD5Nqla3EPI7CU+B1QAXjk1wwstYTVPsxA1wyPuSBTGiO8d+uDBhg4Wa26yxw==',
+                                permission=BlobSasPermissions(read=True),
+                                expiry=datetime.utcnow() + timedelta(hours=1))
+  url = 'https://medrecordfiles.blob.core.windows.net/userfiles/'+fln+'?'+sas_blob
+  return url
+  
 def uploadCryptoFile(data,fln):
   blob_client = blob_service_client.get_blob_client(container='cryptofiles', blob=fln)
   blob_client.upload_blob(data, overwrite=True)
