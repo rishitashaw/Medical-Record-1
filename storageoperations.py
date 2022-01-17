@@ -22,3 +22,13 @@ def uploadCryptoFile(data,fln):
 def downloadCryptoFile(fln):
   blob_client = blob_service_client.get_blob_client(container='cryptofiles', blob=fln)
   return blob_client.download_blob().readall()
+
+def createContainers():
+  try:
+    container_properties = cryptocontainer.get_container_properties()
+  except Exception as e:
+    cryptocontainer.create_container()
+  try:
+    container_properties = usercontainer.get_container_properties()
+  except Exception as e:
+    usercontainer.create_container()
