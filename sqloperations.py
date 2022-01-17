@@ -1,7 +1,7 @@
 import pyodbc
 from io import StringIO
 import csv
-server = 'med-record.database.windows.net'
+server = '10.6.0.5'
 database = 'med-record-sql'
 username = 'sql_user'
 password = '{Password12345*}'   
