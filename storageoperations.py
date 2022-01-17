@@ -14,6 +14,7 @@ def uploadUserFileToBlob(data, fln):
 def getDownloadLink(fln):
   blob_sas_token= generate_blob_sas(
     account_name='medrecordfiles',
+    ResourceTypes(service=False, container=False, object=True),
     container_name='userfiles',
     blob_name=fln,
     account_key='EbVY4ZM3XNywbJbeR6yDFCjJILD5Nqla3EPI7CU+B1QAXjk1wwstYTVPsxA1wyPuSBTGiO8d+uDBhg4Wa26yxw==',
