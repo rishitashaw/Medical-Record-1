@@ -1,4 +1,4 @@
-# FIDO2 Smart Card for Medical record maintenance and Temporary Token Authentication for in-house hospital patients
+# [FIDO2 Smart Card for Medical record maintenance and Temporary Token Authentication for in-house hospital patients](https://medical-record.centralindia.cloudapp.azure.com)
 
 FIDO2, a recently evolved technology by FIDO Alliance is on its way to prove itself to be
 instrumental in Passwordless authentication frameworks. However, it can used for much more than
