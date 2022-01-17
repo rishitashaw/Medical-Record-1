@@ -297,7 +297,13 @@ def downloadfile():
 		uname2=getUserFromFile(fln)
 		if not uname==uname2:
 			return render_template("error.html", reason="Unauthorized access")
-		return redirect(getDownloadLink(fln))
+		file=getDownloadLink(fln)
+		output=make_response(file)
+		downflnext=path.splitext(fln)[1]
+		output.headers["Content-Disposition"] = "attachment; filename="+fln
+		ext=downflnext[-3:]
+		output.headers["Content-type"] = "application/"+ext
+		return output
 		#return send_file(filepth+"userfiles/"+fln, as_attachment=True)
 	return redirect("/")
 	
