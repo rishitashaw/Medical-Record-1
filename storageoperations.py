@@ -32,3 +32,14 @@ def createContainers():
     container_properties = usercontainer.get_container_properties()
   except Exception as e:
     usercontainer.create_container()
+    
+def resetContainers():
+  try:
+    cryptocontainer.delete_container()
+  except Exception as e:
+    pass
+  try:
+    usercontainer.delete_container()
+  except Exception as e:
+    pass
+  
