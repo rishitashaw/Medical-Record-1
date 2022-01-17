@@ -1715,15 +1715,20 @@ body {
 table {
   width: 100%;
   table-layout: fixed;
+  border-collapse: collapse;
 }
 
 th {
-  padding: 20px 15px;
+  padding: 30px 25px;
   text-align: left;
   font-weight: bold;
   font-size: 16px;
   color: #444;
   text-transform: uppercase;
+  background: rgba(88, 70, 249, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 td {
   padding: 15px;
@@ -1733,8 +1738,9 @@ td {
   font-size: 12px;
   color: #444;
 }
-
-td .btn {
-  font-size: 12px;
-  width: 40%;
+table,
+th,
+td {
+  border: none !important;
+  text-align: center;
 }
