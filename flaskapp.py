@@ -223,7 +223,8 @@ def uploaddone():
 		fln=fln+uplflnext
 		if not uplDateValid(tdate):
 			return render_template("error.html", reason="Invalid test date")
-		file.save(filepth+"userfiles/"+fln)
+		uploadUserFileToBlob(file,fln)
+		#file.save(filepth+"userfiles/"+fln)
 		addFile(uname,tname,tdate,upl,fln)
 		eml=getEmailFromUsername(uname)
 		nm=getNameFromUsername(uname)
@@ -253,7 +254,8 @@ def reportupload():
 		return "Unsupported file"
 	fln=str(uuid.uuid4())
 	fln=fln+uplflnext
-	file.save(filepth+"userfiles/"+fln)
+	uploadUserFileToBlob(file,fln)
+	#file.save(filepth+"userfiles/"+fln)
 	addFile(uname,tname,tdate,upl,fln)
 	try:
 		sendEmailNotifAdd(eml,tname,tdate,upl,nm)
