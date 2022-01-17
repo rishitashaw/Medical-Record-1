@@ -24,6 +24,7 @@ filepth='/home/vm_user/medrecords/'
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
 createAllTables()
+createContainers()
 
 app = Flask(__name__, static_url_path="")
 
@@ -224,7 +225,6 @@ def uploaddone():
 		if not uplDateValid(tdate):
 			return render_template("error.html", reason="Invalid test date")
 		uploadUserFileToBlob(file,fln)
-		#file.save(filepth+"userfiles/"+fln)
 		addFile(uname,tname,tdate,upl,fln)
 		eml=getEmailFromUsername(uname)
 		nm=getNameFromUsername(uname)
@@ -255,7 +255,6 @@ def reportupload():
 	fln=str(uuid.uuid4())
 	fln=fln+uplflnext
 	uploadUserFileToBlob(file,fln)
-	#file.save(filepth+"userfiles/"+fln)
 	addFile(uname,tname,tdate,upl,fln)
 	try:
 		sendEmailNotifAdd(eml,tname,tdate,upl,nm)
@@ -304,7 +303,6 @@ def downloadfile():
 		ext=downflnext[-3:]
 		output.headers["Content-type"] = "application/"+ext
 		return output
-		#return send_file(filepth+"userfiles/"+fln, as_attachment=True)
 	return redirect("/")
 	
 @app.route("/inittagread", methods=["GET","POST"])
@@ -517,16 +515,11 @@ def decr(tok):
 def save_key(uname, credentials):
 	fln=getFileFromUsername(uname)
 	uploadCryptoFile(pickle.dumps(credentials),fln)
-	#with open(filepth+'cryptofiles/'+fln+'.pkl','wb') as outp1:
-	#	pickle.dump(credentials,outp1,pickle.HIGHEST_PROTOCOL)
 		
 def read_key(uname):
 	try:
 		fln=getFileFromUsername(uname)
 		return pickle.loads(downloadCryptoFile(fln))
-		#with open(filepth+'cryptofiles/'+fln+'.pkl', 'rb') as inp:
-		#	temp = pickle.load(inp)
-		#	return temp
 	except:
 		print("no cred data")
 		return []
