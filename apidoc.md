@@ -6,7 +6,7 @@
 •	testname: Test name <br>
 •	testdate: Date of the test in YYYY-MM-DD format <br>
 •	file: Report in XML or PDF format <br>
-Endpoint: https://medrecord.eastus.cloudapp.azure.com/api/reportupload  <br>
+Endpoint: https://medical-record.centralindia.cloudapp.azure.com/api/reportupload  <br>
 <br><br>
 ## Example with cURL:
 ```
@@ -15,7 +15,7 @@ Endpoint: https://medrecord.eastus.cloudapp.azure.com/api/reportupload  <br>
 -F "testname=ECG" \
 -F "testdate=2022-01-16" \
 -F "file=@E:/ECG_report.pdf" \
-https://medrecord.eastus.cloudapp.azure.com/api/reportupload
+https://medical-record.centralindia.cloudapp.azure.com/api/reportupload
 ```
 ## Response:
 ```
