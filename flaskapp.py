@@ -11,6 +11,7 @@ from datetime import datetime
 from os import path
 from sqloperations import *
 from emailoperations import *
+from storageoperations import *
 import pickle
 import string
 import random
@@ -294,7 +295,8 @@ def downloadfile():
 		uname2=getUserFromFile(fln)
 		if not uname==uname2:
 			return render_template("error.html", reason="Unauthorized access")
-		return send_file(filepth+"userfiles/"+fln, as_attachment=True)
+		return redirect(getDownloadLink(fln))
+		#return send_file(filepth+"userfiles/"+fln, as_attachment=True)
 	return redirect("/")
 	
 @app.route("/inittagread", methods=["GET","POST"])
@@ -506,15 +508,17 @@ def decr(tok):
 
 def save_key(uname, credentials):
 	fln=getFileFromUsername(uname)
-	with open(filepth+'cryptofiles/'+fln+'.pkl','wb') as outp1:
-		pickle.dump(credentials,outp1,pickle.HIGHEST_PROTOCOL)
+	uploadCryptoFile(pickle.dumps(credentials),fln)
+	#with open(filepth+'cryptofiles/'+fln+'.pkl','wb') as outp1:
+	#	pickle.dump(credentials,outp1,pickle.HIGHEST_PROTOCOL)
 		
 def read_key(uname):
 	try:
 		fln=getFileFromUsername(uname)
-		with open(filepth+'cryptofiles/'+fln+'.pkl', 'rb') as inp:
-			temp = pickle.load(inp)
-			return temp
+		return pickle.loads(downloadCryptoFile(fln))
+		#with open(filepth+'cryptofiles/'+fln+'.pkl', 'rb') as inp:
+		#	temp = pickle.load(inp)
+		#	return temp
 	except:
 		print("no cred data")
 		return []
