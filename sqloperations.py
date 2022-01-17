@@ -232,6 +232,32 @@ def deleteToken(token):
 	except:
 		pass
 
+def resetDb():
+	try:
+		command='DROP table [User];'
+		cursor.execute(command)
+		cursor.commit()
+	except:
+		pass
+	try:
+		command='DROP table [Tags];'
+		cursor.execute(command)
+		cursor.commit()
+	except:
+		pass
+	try:
+		command='DROP table [File];'
+		cursor.execute(command)
+		cursor.commit()
+	except:
+		pass
+	try:
+		command='DROP table [Auth];'
+		cursor.execute(command)
+		cursor.commit()
+	except:
+		pass
+
 def createAllTables():
 	createUserTable()
 	createTagsTable()
