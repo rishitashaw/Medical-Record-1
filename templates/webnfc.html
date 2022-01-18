@@ -1,208 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
+{% block body %}
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top header-inner-pages">
+  <div class="container d-flex align-items-center justify-content-between">
+    <h1 class="logo"><a href="/">Medical Record</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-  <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link scrollto" href="/logout">Log Out</a></li>
 
-    <title>Medical Record</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-    <script src="/cbor.js"></script>
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet">
+  </div>
+</header><!-- End Header -->
 
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<main id="main">
 
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+  <!-- ======= Breadcrumbs ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
 
-    <!-- =======================================================
-  * Template Name: Medical Record - v4.7.0
-  * Template URL: https://bootstrapmade.com/Medical Record-free-skin-bootstrap-3/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-  </head>
-
-  <body>
-
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top header-inner-pages">
-      <div class="container d-flex align-items-center justify-content-between">
-        <h1 class="logo"><a href="/">Medical Record</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
-        <nav id="navbar" class="navbar">
-          <ul>
-            <li><a class="nav-link scrollto" href="/logout">Log Out</a></li>
-
-          </ul>
-          <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Temporary Tokens</h2>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li>Temporary tokens</li>
+        </ol>
       </div>
-    </header><!-- End Header -->
 
-    <main id="main">
+    </div>
+  </section><!-- End Breadcrumbs -->
 
-      <!-- ======= Breadcrumbs ======= -->
-      <section class="breadcrumbs">
-        <div class="container">
+  <section class="inner-page">
+    <div class="container">
+      <article>
+        <h1>Temporary Tokens</h1>
+        <button class="btn btn-lg" id="scanButton" {{scanbuttonparam}}>Scan</button>
+        <button class="btn btn-lg" id="writeButton" {{writebuttonparam}}>Write</button>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <h2>Temporary Tokens</h2>
-            <ol>
-              <li><a href="/">Home</a></li>
-              <li>Temporary tokens</li>
-            </ol>
-          </div>
+      </article>
+    </div>
+  </section>
 
-        </div>
-      </section><!-- End Breadcrumbs -->
+</main><!-- End #main -->
 
-      <section class="inner-page">
-        <div class="container">
-          <article>
-            <h1>Temporary Tokens</h1>
-            <button class="btn btn-lg" id="scanButton" {{scanbuttonparam}}>Scan</button>
-            <button class="btn btn-lg" id="writeButton" {{writebuttonparam}}>Write</button>
+<{% endblock %} <script>
+  log = console.log;
 
-          </article>
-        </div>
-      </section>
+  if ( !( "NDEFReader" in window ) )
+  console.log(
+  "Web NFC is not available.\n" +
+  'Please make sure the "Experimental Web Platform features" flag is enabled on Android.'
+  );
+  </script>
 
-    </main><!-- End #main -->
+  <script>
+    scanButton.addEventListener( "click", async () => {
+      log( "User clicked scan button" );
 
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
+      try {
+        const ndef = new NDEFReader();
+        await ndef.scan();
+        log( "> Scan started" );
 
-      <div class="container">
+        ndef.addEventListener( "readingerror", () => {
+          log( "Argh! Cannot read data from the NFC tag. Try another one?" );
+        } );
 
-        <div class="copyright-wrap d-md-flex py-4">
-          <div class="me-md-auto text-center text-md-start">
-            <div class="copyright">
-              &copy; Copyright <strong><span>Medical Record</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-              Developed by <a href="http://github.com/AdityaMitra5102">Aditya Mitra</a>,
-              <a href="http://github.com/theseregrets"> Rishita Shaw</a>, and <a
-                href="http://github.com/anisha100">Anisha Ghosh</a>
-            </div>
+        ndef.addEventListener( "reading", ( { message, serialNumber } ) => {
+          log( `> Serial Number: ${ serialNumber }` );
+          log( `> Records: (${ message.records.length })` );
+          const decoder = new TextDecoder();
+          for ( const record of message.records ) {
+            const txt = decoder.decode( record.data );
 
-          </div>
-          <div class="social-links text-center text-md-right pt-3 pt-md-0">
-            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-          </div>
-        </div>
-
-      </div>
-    </footer><!-- End Footer -->
-
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
-    <div id="preloader"></div>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/purecounter/purecounter.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-
-    <script>
-      log = console.log;
-
-      if ( !( "NDEFReader" in window ) )
-        console.log(
-          "Web NFC is not available.\n" +
-          'Please make sure the "Experimental Web Platform features" flag is enabled on Android.'
-        );
-    </script>
-
-    <script>
-      scanButton.addEventListener( "click", async () => {
-        log( "User clicked scan button" );
-
-        try {
-          const ndef = new NDEFReader();
-          await ndef.scan();
-          log( "> Scan started" );
-
-          ndef.addEventListener( "readingerror", () => {
-            log( "Argh! Cannot read data from the NFC tag. Try another one?" );
-          } );
-
-          ndef.addEventListener( "reading", ( { message, serialNumber } ) => {
-            log( `> Serial Number: ${ serialNumber }` );
-            log( `> Records: (${ message.records.length })` );
-            const decoder = new TextDecoder();
-            for ( const record of message.records ) {
-              const txt = decoder.decode( record.data );
-
-              if ( txt.startsWith( "tag_" ) ) {
-                window.location.href = "/readtag?tagid=" + txt
-              }
+            if ( txt.startsWith( "tag_" ) ) {
+              window.location.href = "/readtag?tagid=" + txt
             }
+          }
 
-          } );
-        } catch ( error ) {
-          log( "Argh! " + error );
-        }
-      } );
+        } );
+      } catch ( error ) {
+        log( "Argh! " + error );
+      }
+    } );
 
-      writeButton.addEventListener( "click", async () => {
-        log( "User clicked write button" );
+    writeButton.addEventListener( "click", async () => {
+      log( "User clicked write button" );
 
-        try {
-          const ndef = new NDEFReader();
-          await ndef.scan();
-          log( "> Scan started" );
+      try {
+        const ndef = new NDEFReader();
+        await ndef.scan();
+        log( "> Scan started" );
 
-          ndef.addEventListener( "readingerror", () => {
-            log( "Argh! Cannot read data from the NFC tag. Try another one?" );
-          } );
+        ndef.addEventListener( "readingerror", () => {
+          log( "Argh! Cannot read data from the NFC tag. Try another one?" );
+        } );
 
-          ndef.addEventListener( "reading", ( { message, serialNumber } ) => {
-            log( "Read" );
-          } );
-          await ndef.write( "tag_{{token}}" );
+        ndef.addEventListener( "reading", ( { message, serialNumber } ) => {
+          log( "Read" );
+        } );
+        await ndef.write( "tag_{{token}}" );
 
-          setTimeout( function () {
-            console.log( "delay" );
-          }, 1000 ); //delay is in milliseconds 
+        setTimeout( function () {
+          console.log( "delay" );
+        }, 1000 ); //delay is in milliseconds 
 
-          alert( "Temporary tag provisioned" );
-          window.location.href = "/";
-        } catch ( error ) {
-          alert( "> Error" );
-          window.location.href = "/";
-        }
-      } );
+        alert( "Temporary tag provisioned" );
+        window.location.href = "/";
+      } catch ( error ) {
+        alert( "> Error" );
+        window.location.href = "/";
+      }
+    } );
 
-    </script>
+  </script>
   </BODY>
 
-</HTML>
+  </HTML>
