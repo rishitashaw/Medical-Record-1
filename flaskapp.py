@@ -476,7 +476,7 @@ def authenticate_begin():
 @app.route("/api/authenticate/complete", methods=["GET","POST"])
 def authenticate_complete():
     uname=request.args.get('uname')
-    token=request.args.get('token').split('$')
+    token=decr(request.args.get('token')).split('$')
     tok=token[0]
     ip=token[1]
     ip1=request.remote_addr
