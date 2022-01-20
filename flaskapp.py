@@ -226,6 +226,7 @@ def uploaddone():
 			return render_template("error.html", reason="Invalid test date")
 		uploadUserFileToBlob(file,fln)
 		addFile(uname,tname,tdate,upl,fln)
+		addAuditRecord(uname,tname,tdate,upl,fln,'Web','Upload')
 		eml=getEmailFromUsername(uname)
 		nm=getNameFromUsername(uname)
 		try:
@@ -256,6 +257,7 @@ def reportupload():
 	fln=fln+uplflnext
 	uploadUserFileToBlob(file,fln)
 	addFile(uname,tname,tdate,upl,fln)
+	addAuditRecord(uname,tname,tdate,upl,fln,'API','Upload')
 	try:
 		sendEmailNotifAdd(eml,tname,tdate,upl,nm)
 	except:
@@ -297,6 +299,10 @@ def downloadfile():
 		if not uname==uname2:
 			return render_template("error.html", reason="Unauthorized access")
 		file=getDownloadLink(fln)
+		tname=getTestFromFile(fln)
+		tdate=getDateFromFile(fln)
+		upl=getUploaderFromFile(fln)
+		addAuditRecord(uname,tname,tdate,upl,fln,'Web','Download')
 		output=make_response(file)
 		downflnext=path.splitext(fln)[1]
 		output.headers["Content-Disposition"] = "attachment; filename="+fln
