@@ -1,4 +1,6 @@
 from sqloperations import *
-k=readAudit()
+from emailoperations import *
 
+k=readAudit()
+sendLogEmail(k)
 print(k)
