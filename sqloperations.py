@@ -1,6 +1,7 @@
 import pyodbc
 from io import StringIO
 import csv
+from datetime import datetime
 server = 'medical-record-db.privatelink.database.windows.net'
 database = 'med-record-sql'
 username = 'sql_user'
@@ -191,7 +192,35 @@ def getFileListFromUser(user):
 	except:
 		return "Error"
 		
-
+def createAuditTable():
+	try:
+		cursor.execute("CREATE TABLE [Audit](ts VARCHAR(50), username VARCHAR(50), test VARCHAR(50), dt VARCHAR(50), user VARCHAR(50), filename VARCHAR(50), mode VARCHAR(50), oper VARCHAR(50)";)
+		cursor.commit()
+	except:
+		pass
+	
+def addAuditRecord(username, test, dt, user, filename,mode,oper):
+	try:
+		command = 'INSERT INTO [Audit] VALUES (?,?,?,?,?,?,?)'
+		ts=str(datetime.now())
+		cursor.execute(command,ts,username,test,dt,user,filename,mode,oper)
+		cursor.commit()
+	except:
+		pass
+	
+def readAudit():
+	k=""
+	k=k+"Timestamp, Username, Test name, Date, Operator, Filename, Mode, Operation\n"
+	command= 'SELECT * FROM [Audit]'
+	cursor.execute(command)
+	retValue=cursor.fetchall()
+	cursor.commit()
+	for i in retValue:
+		for x in range (0,8):
+			k=k+i[x]+", "
+		k=k+"\n"
+	print(k)
+		
 def createAuthTable():
 	try:
 		cursor.execute("CREATE TABLE [Auth](username VARCHAR(50), token VARCHAR(50) UNIQUE)")
@@ -257,9 +286,16 @@ def resetDb():
 		cursor.commit()
 	except:
 		pass
+	try:
+		command='DROP table [Audit];'
+		cursor.execute(command)
+		cursor.commit()
+	except:
+		pass
 
 def createAllTables():
 	createUserTable()
 	createTagsTable()
 	createFileTable()
 	createAuthTable()
+	createAuditTable()
