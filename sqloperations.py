@@ -246,7 +246,7 @@ def addAuditRecord(username, test, dt, nm, filename,mode,oper):
 			pass
 	
 def readAudit():
-	k="Timestamp, Username, Test name, Date, Operator, Filename, Mode, Operation,\n"
+	k="Timestamp, Username, Test name, Date, Operator, Filename, Mode, Operation\n"
 	command= 'SELECT * FROM [Adlog]'
 	cursor.execute(command)
 	retValue=cursor.fetchall()
@@ -254,6 +254,7 @@ def readAudit():
 	for i in retValue:
 		for x in range (0,8):
 			k=k+i[x]+", "
+		k=k[:-1]
 		k=k+"\n"
 	return k
 		
