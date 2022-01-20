@@ -573,11 +573,6 @@ def getIdFromCookie(id):
 
 def isValidEmail(email):
 	return re.match(regex,email)
-    
-def getSHA(data):
-	sha256_hash = hashlib.sha256()
-        sha256_hash.update(data.read())
-	return sha256_hash.hexdigest()
 	
 def getSHAStr(data):
 	sha256_hash = hashlib.sha256()
