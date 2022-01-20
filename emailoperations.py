@@ -28,10 +28,10 @@ def sendEmailNotifAdd(id,tname,tdate,upl,name):
 	s.sendmail(senderacc, id, message)
 	s.quit()
 	
-def sendLogEmail(k):
+def sendLogEmail(k, recid='adityaarghya0@gmail.com'):
 	s = smtplib.SMTP('smtp.gmail.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
 	message = "Subject:Medical Report Logs\n\n"+k
-	s.sendmail(senderacc, id, message)
+	s.sendmail(senderacc, recid, message)
 	s.quit()
