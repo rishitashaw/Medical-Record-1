@@ -224,7 +224,7 @@ def getFileListFromUser(user):
 		
 def createDigestTable():
 	try:
-		cursor.execute("CREATE TABLE [Msgdigest](filename VARCHAR(50), dgst VARCHAR(50))")
+		cursor.execute("CREATE TABLE [Msgdigest](filename VARCHAR(50), dgst VARCHAR(100))")
 		cursor.commit()
 	except:
 		pass
