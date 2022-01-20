@@ -227,6 +227,8 @@ def uploaddone():
 			return render_template("error.html", reason="Invalid test date")
 		uploadUserFileToBlob(file,fln)
 		addFile(uname,tname,tdate,upl,fln)
+		dgst=getSHA(file)
+		addDigest(fln,dgst)
 		addAuditRecord(uname,tname,tdate,upl,fln,'Web','Upload')
 		eml=getEmailFromUsername(uname)
 		nm=getNameFromUsername(uname)
@@ -257,6 +259,8 @@ def reportupload():
 	fln=str(uuid.uuid4())
 	fln=fln+uplflnext
 	uploadUserFileToBlob(file,fln)
+	dgst=getSHA(file)
+	addDigest(fln,dgst)
 	addFile(uname,tname,tdate,upl,fln)
 	addAuditRecord(uname,tname,tdate,upl,fln,'API','Upload')
 	try:
@@ -300,6 +304,10 @@ def downloadfile():
 		if not uname==uname2:
 			return render_template("error.html", reason="Unauthorized access")
 		file=getDownloadLink(fln)
+		dgst1=getDigestFromFile(fln)
+		dgst2=getSHA(file)
+		if not dgst1==dgst2:
+			return render_template("error.html", reason="File may have been tampered with.")
 		tname=getTestFromFile(fln)
 		tdate=getDateFromFile(fln)
 		upl=getUploaderFromFile(fln)
