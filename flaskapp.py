@@ -78,12 +78,15 @@ def signupresp():
 	em2=getEmailFromUsername(uname)
 	if not em2=="00":
 		return render_template("error.html", reason="Username already exists")
-	otp=genOtp()
-	sec=name+"$"+uname+"$"+eml+"$"+otp+"$"+request.remote_addr
+	
+	now=str(datetime.now())
+	tok=str(uuid.uuid4())
+	addToken(uname,tok)
+	sec=name+"$"+uname+"$"+eml+"$"+now+"$"+request.remote_addr+"$"+tok
 	encotp=encr(sec)
 	lnk='https://'+url+'/otpinp?token='+encotp
 	sendEmailLink(eml,lnk)
-	return render_template("error.html", reason='You can exit this tab and open the link sent to your email from this device only')
+	return render_template("error.html", reason='You can exit this tab and open the link sent to your email from this device only. Link valid for 10 mins.')
 	
 @app.route("/otpinp", methods=["GET"])
 def otpinp():
@@ -91,13 +94,15 @@ def otpinp():
 	name=dat[0]
 	uname=dat[1]
 	eml=dat[2]
-	otp=dat[3]
+	tm=dat[3]
 	ip1=dat[4]
-	inpotp=request.form['otp'].strip()
+	tok=dat[5]
 	ip=request.remote_addr
 	if not ip==ip1:
 		return redirect("/logout")
-	if otp==inpotp:
+	uname1=getUsernameFromToken(tok)
+	deleteToken(tok)
+	if uname==uname1 and linkDateValid(tm):
 		fln=str(uuid.uuid4())
 		addUser(uname,eml,name,fln)
 		print(uname,eml,name)
@@ -549,13 +554,23 @@ def tokenValid(token):
 		deleteTag(token)
 	return k
 
-def uplDateValid(upldt):
+def uplDateValid(lnkdt):
 	try:
 		now=datetime.now()
 		dtm=now.strftime("%Y-%m-%d")
 		currdt=datetime.strptime(dtm, "%Y-%m-%d")
 		upldt=datetime.strptime(upldt, "%Y-%m-%d")
 		k=currdt>=upldt
+		return k
+	except:
+		return False
+	
+def linkDateValid(lnkdt):
+	try:
+		now=datetime.now()
+		dtm=datetime.strptime(lnkdt)
+		expdt=dtm+timedelta(minutes = 10)
+		k=exp>=now
 		return k
 	except:
 		return False
