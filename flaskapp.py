@@ -310,6 +310,7 @@ def downloadfile():
 		file=getDownloadLink(fln)
 		dgst1=getDigestFromFile(fln)
 		dgst2=getSHAStr(file)
+		print(dgst1,dgst2)
 		if not dgst1==dgst2:
 			return render_template("error.html", reason="File may have been tampered with.")
 		tname=getTestFromFile(fln)
