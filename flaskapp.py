@@ -99,6 +99,8 @@ def otpinp():
 	ip2=decr(request.form['encname']).split()[1]
 	ip3=decr(request.form['encuname']).split()[1]
 	ip4=decr(request.form['enceml']).split()[1]
+	print(otp,name,uname,eml)
+	print(ip,ip1,ip2,ip3,ip4)
 	if not (ip==ip1 and ip==ip2 and ip==ip3 and ip==ip4):
 		return redirect("/logout")
 	if otp==inpotp:
