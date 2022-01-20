@@ -566,14 +566,12 @@ def uplDateValid(lnkdt):
 		return False
 	
 def linkDateValid(lnkdt):
-	try:
-		now=datetime.now()
-		dtm=datetime.strptime(lnkdt)
-		expdt=dtm+timedelta(minutes = 10)
-		k=exp>=now
-		return k
-	except:
-		return False
+	now=datetime.now()
+	dtm=datetime.strptime(lnkdt)
+	expdt=dtm+timedelta(minutes = 10)
+	k=exp>=now
+	print(k,exp,now)
+	return k
 
 def checkValidCookie(id, ip):
 	try:
