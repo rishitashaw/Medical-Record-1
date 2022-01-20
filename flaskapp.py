@@ -479,7 +479,9 @@ def authenticate_complete():
     token=request.args.get('token').split('$')
     tok=token[0]
     ip=token[1]
-    if not ip==request.remote_addr:
+    ip1=request.remote_addr
+    print(ip, ip1)
+    if not ip==ip1:
 	abort(401)
     credentials=read_key(uname)
     if not credentials:
