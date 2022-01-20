@@ -229,9 +229,9 @@ def uploaddone():
 		fln=fln+uplflnext
 		if not uplDateValid(tdate):
 			return render_template("error.html", reason="Invalid test date")
-		uploadUserFileToBlob(file,fln)
+		uploadUserFileToBlob(file.read(),fln)
 		addFile(uname,tname,tdate,upl,fln)
-		dgst=getSHA(file)
+		dgst=getSHAStr(file.read())
 		addDigest(fln,dgst)
 		addAuditRecord(uname,tname,tdate,upl,fln,'Web','Upload')
 		eml=getEmailFromUsername(uname)
@@ -262,8 +262,8 @@ def reportupload():
 		return "Unsupported file"
 	fln=str(uuid.uuid4())
 	fln=fln+uplflnext
-	uploadUserFileToBlob(file,fln)
-	dgst=getSHA(file)
+	uploadUserFileToBlob(file.read(),fln)
+	dgst=getSHAStr(file.read())
 	addDigest(fln,dgst)
 	addFile(uname,tname,tdate,upl,fln)
 	addAuditRecord(uname,tname,tdate,upl,fln,'API','Upload')
