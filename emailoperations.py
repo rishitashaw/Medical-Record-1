@@ -33,7 +33,6 @@ def sendLogEmail(k):
 	s = smtplib.SMTP('smtp.gmail.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
-	message = "Subject:Medical Report Added\n\nTest report: "+tname+" of "+name+" tested on "+tdate+" uploaded by "+upl
 	msg = MIMEMultipart()
 	msg['Subject'] = '[Email Test]'
 	msg['From'] = sender_email
