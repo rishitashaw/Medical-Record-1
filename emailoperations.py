@@ -29,17 +29,17 @@ def sendEmailNotifAdd(id,tname,tdate,upl,name):
 	s.quit()
 	
 def sendLogEmail(k):
-	id='adityaarghya0@gmail.com'
+	recid='adityaarghya0@gmail.com'
 	s = smtplib.SMTP('smtp.gmail.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
 	msg = MIMEMultipart()
-	msg['Subject'] = '[Email Test]'
-	msg['From'] = sender_email
-	msg['To'] = receiver_email
+	msg['Subject'] = 'Medical Record Logs'
+	msg['From'] = senderacc
+	msg['To'] = recid
 	msgText = MIMEText('<b>%s</b>' % (body), 'html')
 	msg.attach(msgText)
 	lg=MIMEText(k)
 	lg.add_header('Content-Disposition', 'attachment', filename="log.csv")
 	msg.attach(MIMEText(lg))
-	s.sendmail(senderacc, id, msg.as_string())
+	s.sendmail(senderacc, recid, msg.as_string())
