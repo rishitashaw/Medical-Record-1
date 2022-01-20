@@ -562,7 +562,7 @@ def tokenValid(token):
 		deleteTag(token)
 	return k
 
-def uplDateValid(lnkdt):
+def uplDateValid(upldt):
 	try:
 		now=datetime.now()
 		dtm=now.strftime("%Y-%m-%d")
