@@ -134,8 +134,10 @@ def signin():
 	tok=decr(request.args.get('token')).split('$')
 	token=tok[0]
 	ip=tok[1]
+	ip1=request.remote_addr
 	print(tok)
-	if not ip==request.remote_addr:
+	print(ip,ip1)
+	if not ip==ip1:
 		return redirect("/logout")
 	uname=getUsernameFromToken(token)
 	deleteToken(token)
