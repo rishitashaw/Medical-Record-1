@@ -89,16 +89,16 @@ def signupresp():
 	
 @app.route("/otpinp", methods=["GET", "POST"])
 def otpinp():
-	otp=decr(request.form['encotp']).split()[1]
-	name=decr(request.form['encname']).split()[1]
-	uname=decr(request.form['encuname']).split()[1]
-	eml=decr(request.form['enceml']).split()[1]
+	otp=decr(request.form['encotp']).split()[0]
+	name=decr(request.form['encname']).split()[0]
+	uname=decr(request.form['encuname']).split()[0]
+	eml=decr(request.form['enceml']).split()[0]
 	inpotp=request.form['otp'].strip()
 	ip=request.remote_addr
-	ip1=decr(request.form['encotp']).split()[0]
-	ip2=decr(request.form['encname']).split()[0]
-	ip3=decr(request.form['encuname']).split()[0]
-	ip4=decr(request.form['enceml']).split()[0]
+	ip1=decr(request.form['encotp']).split()[1]
+	ip2=decr(request.form['encname']).split()[1]
+	ip3=decr(request.form['encuname']).split()[1]
+	ip4=decr(request.form['enceml']).split()[1]
 	if not (ip==ip1 and ip==ip2 and ip==ip3 and ip==ip4):
 		return redirect("/logout")
 	if otp==inpotp:
