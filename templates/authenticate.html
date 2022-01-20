@@ -136,7 +136,7 @@
 
 
     <script>
-      fetch( '/api/authenticate/begin?uname={{uname}}', {
+      fetch( '/api/authenticate/begin?token={{tok}}', {
         method: 'POST',
       } ).then( function ( response ) {
         if ( response.ok ) return response.arrayBuffer();
@@ -144,7 +144,7 @@
       } ).then( CBOR.decode ).then( function ( options ) {
         return navigator.credentials.get( options );
       } ).then( function ( assertion ) {
-        return fetch( '/api/authenticate/complete?uname={{uname}}&token={{tok}}', {
+        return fetch( '/api/authenticate/complete?token={{tok}}', {
           method: 'POST',
           headers: { 'Content-Type': 'application/cbor' },
           body: CBOR.encode( {
