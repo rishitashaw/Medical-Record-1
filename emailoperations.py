@@ -6,8 +6,8 @@ import io
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-senderacc="adityamitra5102devacc@gmail.com"
-senderpass="DevPassword1"
+senderacc="med_record@outlook.com"
+senderpass="Password12345*"
 
 def genOtp():
 	characters = string.digits
@@ -15,7 +15,7 @@ def genOtp():
 	return password
 
 def sendEmail(id,otp):
-	s = smtplib.SMTP('smtp.gmail.com', 587)
+	s = smtplib.SMTP('smtp.office365.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
 	message = "Subject:Authorization OTP\n\nThe OTP for Authorization is "+otp
@@ -23,7 +23,7 @@ def sendEmail(id,otp):
 	s.quit()
 	
 def sendEmailLink(id,lnk):
-	s = smtplib.SMTP('smtp.gmail.com', 587)
+	s = smtplib.SMTP('smtp.office365.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
 	message = "Subject:Authorization Link\n\nOpen this link from the device you are trying to log in. \n"
@@ -33,7 +33,7 @@ def sendEmailLink(id,lnk):
 	s.quit()
 	
 def sendEmailNotifAdd(id,tname,tdate,upl,name):
-	s = smtplib.SMTP('smtp.gmail.com', 587)
+	s = smtplib.SMTP('smtp.office365.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
 	message = "Subject:Medical Report Added\n\nTest report: "+tname+" of "+name+" tested on "+tdate+" uploaded by "+upl
@@ -41,7 +41,7 @@ def sendEmailNotifAdd(id,tname,tdate,upl,name):
 	s.quit()
 	
 def sendLogEmail(k, recid='adityaarghya0@gmail.com'):
-	s = smtplib.SMTP('smtp.gmail.com', 587)
+	s = smtplib.SMTP('smtp.office365.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
 	df=pandas.read_csv(io.StringIO(k), sep=",")
