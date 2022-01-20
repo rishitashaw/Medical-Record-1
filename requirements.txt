@@ -7,3 +7,4 @@ uuid
 secure-smtplib
 pyre2
 azure-storage-blob
+pandas
