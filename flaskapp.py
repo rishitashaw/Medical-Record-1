@@ -50,10 +50,6 @@ key1=pickle.load(inp1)
 inp1.close()
 f1=Fernet(key1)
 
-# Single user support.
-credentials = []
-
-
 @app.route("/")
 def index():
 	type=request.cookies.get("type")
@@ -376,16 +372,21 @@ def loginotp():
 	if eml=="00":
 		return render_template("error.html", reason="No such user")
 	otp=genOtp()
-	encuname=encr(uname)
-	encotp=encr(otp)
+	encuname=encr(uname+"$"+request.remote_addr)
+	encotp=encr(otp+"$"+request.remote_addr)
 	sendEmail(eml,otp)
 	return render_template("loginotp.html",encotp=encotp,encuname=encuname)
 	
 @app.route("/loginotpinp", methods=["GET","POST"])
 def loginotpinp():
-	otp=decr(request.form['encotp'])
-	uname=decr(request.form['encuname'])
-	inpotp=request.form['otp'].strip()
+	otp=decr(request.form['encotp']).split('$')[0]
+	uname=decr(request.form['encuname']).split('$')[0]
+	inpotp=request.form['otp']
+	ip=request.remote_addr
+	ip1=decr(request.form['encotp']).split('$')[1]
+	ip2=decr(request.form['encuname']).split('$')[1]
+	if not (ip==ip1 and ip==ip2):
+		return redirect("/logout")
 	if otp==inpotp:
 		encuname=encr(uname+' '+request.remote_addr)
 		resp=make_response(redirect("/dashboard"))
