@@ -100,7 +100,7 @@ def otpinp():
 		fln=str(uuid.uuid4())
 		addUser(uname,eml,name,fln)
 		print(uname,eml,name)
-		resp= make_response(render_template("register.html",encuname=encr(uname)))
+		resp= make_response(render_template("register.html",encuname=encr(uname+"$"+request.remote_addr)))
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
 		return resp
 	else:
@@ -171,7 +171,7 @@ def inittag():
 def fidoreg():
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname=getIdFromCookie(request.cookies.get("id"))
-		resp= make_response(render_template("register.html",encuname=encr(uname)))
+		resp= make_response(render_template("register.html",encuname=encr(uname+"$"+request.remote_addr)))
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
 		return resp
 	return redirect("/")
@@ -180,7 +180,7 @@ def fidoreg():
 def fidoregplatform():
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname=getIdFromCookie(request.cookies.get("id"))
-		resp= make_response(render_template("register_platform.html",encuname=encr(uname)))
+		resp= make_response(render_template("register_platform.html",encuname=encr(uname+"$"+request.remote_addr)))
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
 		return resp
 	return redirect("/")
@@ -406,8 +406,12 @@ def loginotpinp():
 
 @app.route("/api/register/beginplatform", methods=["GET","POST"])
 def register_begin_platform():
-    encuname=request.args.get('uname')
-    uname=decr(encuname)
+    encuname=decr(request.args.get('uname')).split('$')
+    uname=encuname[0]
+    ip=request.remote_addr
+    ip1=encuname[1]
+    if not ip==ip1:
+	abort(401)
     credentials=read_key(uname)
     registration_data, state = server.register_begin(
         {
@@ -430,8 +434,12 @@ def register_begin_platform():
 	
 @app.route("/api/register/begin", methods=["GET","POST"])
 def register_begin():
-    encuname=request.args.get('uname')
-    uname=decr(encuname)
+    encuname=decr(request.args.get('uname')).split('$')
+    uname=encuname[0]
+    ip=request.remote_addr
+    ip1=encuname[1]
+    if not ip==ip1:
+	abort(401)
     credentials=read_key(uname)
     registration_data, state = server.register_begin(
         {
@@ -453,8 +461,12 @@ def register_begin():
 
 @app.route("/api/register/complete", methods=["GET","POST"])
 def register_complete():
-    encuname=request.args.get('uname')
-    uname=decr(encuname)
+    encuname=decr(request.args.get('uname')).split('$')
+    uname=encuname[0]
+    ip=request.remote_addr
+    ip1=encuname[1]
+    if not ip==ip1:
+	abort(401)
     credentials=read_key(uname)
     data = cbor.decode(request.get_data())
     client_data = ClientData(data["clientDataJSON"])
