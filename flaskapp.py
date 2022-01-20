@@ -12,6 +12,7 @@ from os import path
 from sqloperations import *
 from emailoperations import *
 from storageoperations import *
+import hashlib
 import pickle
 import string
 import random
@@ -512,6 +513,11 @@ def getIdFromCookie(id):
 def isValidEmail(email):
 	return re.match(regex,email)
     
+def getSHA(data):
+	m=hashlib.sha256()
+	m.update(data)
+	return str(m.hexdigest())
+	
 def encr(wrd):
 	return f1.encrypt(wrd.encode()).decode()
 	
