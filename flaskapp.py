@@ -387,24 +387,30 @@ def loginotp():
 	eml=getEmailFromUsername(uname)
 	if eml=="00":
 		return render_template("error.html", reason="No such user")
-	otp=genOtp()
-	sec=uname+"$"+otp+"$"+request.remote_addr
+	now=datetime.now()
+	date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+	tok=str(uuid.uuid4())
+	addToken(uname,tok)
+	sec=uname+"$"+date_time+"$"+request.remote_addr+"$"+tok
 	encotp=encr(sec)
 	lnk='https://'+url+'/loginotpinp?token='+encotp
 	sendEmailLink(eml,lnk)
-	return render_template("error.html", reason='You can exit this tab and open the link sent to your email from this device only')
+	return render_template("error.html", reason='You can exit this tab and open the link sent to your email from this device only. Link valid for 10 mins.')
 	
 @app.route("/loginotpinp", methods=["GET","POST"])
 def loginotpinp():
 	sec=decr(request.args.get('token')).split('$')
 	uname=sec[0]
-	otp=sec[1]
-	inpotp=request.form['otp']
-	ip=request.remote_addr
+	tm=sec[1]
 	ip1=sec[2]
+	tok=sec[3]
+	ip=request.remote_addr
 	if not ip==ip1:
 		return redirect("/logout")
-	if otp==inpotp:
+	uname1=getUsernameFromToken(tok)
+	print(tok,uname,uname1)
+	deleteToken(tok)
+	if uname==uname1 and linkDateValid(tm):
 		encuname=encr(uname+' '+request.remote_addr)
 		resp=make_response(redirect("/dashboard"))
 		resp.set_cookie("id",encuname, max_age=3600)
