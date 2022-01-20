@@ -125,7 +125,7 @@ def setcookie():
 def authenticate():
 	uname=request.cookies.get("username")
 	token=uuid.uuid4()
-	token=token+"$"+request.remote_addr
+	token=str(token)+"$"+request.remote_addr
 	tok=encr(token)
 	return render_template("authenticate.html", uname=uname, tok=tok)
 
