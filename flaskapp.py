@@ -572,8 +572,8 @@ def linkDateValid(lnkdt):
 	print(lnkdt)
 	dtm=datetime.strptime(lnkdt, "%m/%d/%Y, %H:%M:%S")
 	expdt=dtm+timedelta(minutes = 10)
-	k=exp>=now
-	print(k,exp,now)
+	k=expdt>=now
+	print(k,expdt,now)
 	return k
 
 def checkValidCookie(id, ip):
