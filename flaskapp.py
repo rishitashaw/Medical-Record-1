@@ -138,8 +138,10 @@ def signin():
 	print(tok)
 	print(ip,ip1)
 	if not ip==ip1:
+		print('IP not matched')
 		return redirect("/logout")
 	uname=getUsernameFromToken(token)
+	print(uname)
 	deleteToken(token)
 	uname=uname
 	encuname=encr(uname+' '+request.remote_addr)
