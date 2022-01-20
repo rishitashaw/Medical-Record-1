@@ -386,7 +386,11 @@ def loginotp():
 	uname=request.args.get('uname')
 	eml=getEmailFromUsername(uname)
 	if eml=="00":
-		return render_template("error.html", reason="No such user")
+		resp=make_response(render_template("error.html", reason="No such user"))
+		resp.set_cookie("username",'',expires=0)
+		resp.set_cookie("id",'',expires=0)
+		resp.set_cookie("type",'',expires=0)
+		return resp
 	now=datetime.now()
 	date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
 	tok=str(uuid.uuid4())
