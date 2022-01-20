@@ -188,7 +188,10 @@ def dashboard():
 		if type=="user":
 			token=getIdFromCookie(request.cookies.get("id"))
 			if not tokenValid(token):
-				return render_template("error.html", reason="Token expired")
+				resp= make_response(render_template("error.html", reason="Token expired"))
+				resp.set_cookie("id",'',expires=0)
+				resp.set_cookie("type",'',expires=0)
+				return resp
 			uname=getUsernameFromTag(token)
 			name=getNameFromUsername(uname)
 			exp=getExpiryFromTag(token)
