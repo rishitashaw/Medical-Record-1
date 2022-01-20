@@ -101,6 +101,7 @@ def otpinp():
 	if not ip==ip1:
 		return redirect("/logout")
 	uname1=getUsernameFromToken(tok)
+	print(tok,uname,uname1)
 	deleteToken(tok)
 	if uname==uname1 and linkDateValid(tm):
 		fln=str(uuid.uuid4())
