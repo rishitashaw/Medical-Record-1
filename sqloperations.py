@@ -224,16 +224,16 @@ def getFileListFromUser(user):
 		
 def createAuditTable():
 	try:
-		cursor.execute("CREATE TABLE [Adlog](tstp VARCHAR(50), username VARCHAR(50), test VARCHAR(50), dt VARCHAR(50), user VARCHAR(50), filename VARCHAR(50), mode VARCHAR(50), oper VARCHAR(50))")
+		cursor.execute("CREATE TABLE [Adlog](tstp VARCHAR(50), username VARCHAR(50), test VARCHAR(50), dt VARCHAR(50), nm VARCHAR(50), filename VARCHAR(50), mode VARCHAR(50), oper VARCHAR(50))")
 		cursor.commit()
 	except:
 		pass
 	
-def addAuditRecord(username, test, dt, user, filename,mode,oper):
+def addAuditRecord(username, test, dt, nm, filename,mode,oper):
 	try:
 		command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?)'
 		tstp=str(datetime.now())
-		cursor.execute(command,tstp,username,test,dt,user,filename,mode,oper)
+		cursor.execute(command,tstp,username,test,dt,nm,filename,mode,oper)
 		cursor.commit()
 	except:
 		pass
