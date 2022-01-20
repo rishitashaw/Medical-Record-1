@@ -222,6 +222,7 @@ def uploaddone():
 		tname=request.form['tname']
 		tdate=request.form['tdate']
 		file=request.files['file']
+		filecont=file.read()
 		uplflnext=path.splitext(file.filename)[1]
 		if not (uplflnext=='.pdf' or uplflnext=='.xml'):
 			return render_template("error.html", reason="Unsupported file")
@@ -229,9 +230,9 @@ def uploaddone():
 		fln=fln+uplflnext
 		if not uplDateValid(tdate):
 			return render_template("error.html", reason="Invalid test date")
-		uploadUserFileToBlob(file.read(),fln)
+		uploadUserFileToBlob(filecont,fln)
 		addFile(uname,tname,tdate,upl,fln)
-		dgst=getSHAStr(file.read())
+		dgst=getSHAStr(filecont)
 		addDigest(fln,dgst)
 		addAuditRecord(uname,tname,tdate,upl,fln,'Web','Upload')
 		eml=getEmailFromUsername(uname)
@@ -257,13 +258,14 @@ def reportupload():
 	nm=getNameFromUsername(uname)
 	eml=getEmailFromUsername(uname)
 	file=request.files['file']
+	filecont=file.read()
 	uplflnext=path.splitext(file.filename)[1]
 	if not (uplflnext=='.pdf' or uplflnext=='.xml'):
 		return "Unsupported file"
 	fln=str(uuid.uuid4())
 	fln=fln+uplflnext
-	uploadUserFileToBlob(file.read(),fln)
-	dgst=getSHAStr(file.read())
+	uploadUserFileToBlob(filecont,fln)
+	dgst=getSHAStr(filecont)
 	addDigest(fln,dgst)
 	addFile(uname,tname,tdate,upl,fln)
 	addAuditRecord(uname,tname,tdate,upl,fln,'API','Upload')
