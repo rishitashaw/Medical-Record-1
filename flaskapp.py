@@ -85,9 +85,9 @@ def signupresp():
 	sendEmailLink(eml,lnk)
 	return render_template("error.html", reason='You can exit this tab and open the link sent to your email from this device only')
 	
-@app.route("/otpinp", methods=["GET", "POST"])
+@app.route("/otpinp", methods=["GET"])
 def otpinp():
-	dat=decr(request.args.get('token')).split('$')
+	dat=decr(request.args.get("token")).split('$')
 	name=dat[0]
 	uname=dat[1]
 	eml=dat[2]
