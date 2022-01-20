@@ -249,7 +249,7 @@ def readAudit():
 		for x in range (0,8):
 			k=k+i[x]+", "
 		k=k+"\n"
-	print(k)
+	return k
 		
 def createAuthTable():
 	try:
