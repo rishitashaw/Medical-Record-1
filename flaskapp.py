@@ -72,6 +72,9 @@ def signupresp():
 	name=request.form['name'].strip()
 	uname=request.form['uname'].strip()
 	eml=request.form['eml'].strip()
+	for c in name:
+		if not (c.isalpha() or c==' '):
+			return render_template("error.html", reason="Name should be alphabetic")
 	if not uname.isalnum():
 		return render_template("error.html", reason="Username should be alphanumeric")
 	if not isValidEmail(eml):
