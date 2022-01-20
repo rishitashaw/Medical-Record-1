@@ -135,7 +135,7 @@ def authenticate():
 	token=uuid.uuid4()
 	token=str(token)+"$"+request.remote_addr+"$"+uname
 	tok=encr(token)
-	return render_template("authenticate.html", tok=tok)
+	return render_template("authenticate.html", tok=tok, uname=uname)
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
