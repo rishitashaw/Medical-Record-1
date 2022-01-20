@@ -6,9 +6,9 @@ import io
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-senderacc="med_record@outlook.com"
-senderpass="Password12345*"
-server='smtp-mail.outlook.com'
+senderacc="adityamitra5102devacc@gmail.com"
+senderpass="DevPassword1"
+server='smtp.gmail.com'
 port=587
 
 def genOtp():
