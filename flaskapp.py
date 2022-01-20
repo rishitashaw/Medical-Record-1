@@ -366,20 +366,20 @@ def loginotp():
 	if eml=="00":
 		return render_template("error.html", reason="No such user")
 	otp=genOtp()
-	encuname=encr(uname+"$"+request.remote_addr)
-	encotp=encr(otp+"$"+request.remote_addr)
+	sec=uname+"$"+otp+"$"+request.remote_addr
+	encotp=encr(sec)
 	sendEmail(eml,otp)
 	return render_template("loginotp.html",encotp=encotp,encuname=encuname)
 	
 @app.route("/loginotpinp", methods=["GET","POST"])
 def loginotpinp():
-	otp=decr(request.form['encotp']).split('$')[0]
-	uname=decr(request.form['encuname']).split('$')[0]
+	sec=decr(request.form['encotp']).split('$')
+	uname=sec[0]
+	otp=sec[1]
 	inpotp=request.form['otp']
 	ip=request.remote_addr
-	ip1=decr(request.form['encotp']).split('$')[1]
-	ip2=decr(request.form['encuname']).split('$')[1]
-	if not (ip==ip1 and ip==ip2):
+	ip1=sec[2]
+	if not ip==ip1:
 		return redirect("/logout")
 	if otp==inpotp:
 		encuname=encr(uname+' '+request.remote_addr)
