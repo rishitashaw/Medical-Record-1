@@ -39,7 +39,7 @@ def sendLogEmail(k, recid='adityaarghya0@gmail.com'):
 	MESSAGE['subject'] = 'Medical Report Logs'
 	MESSAGE['To'] = recid
 	MESSAGE['From'] = senderacc
-	HTML_BODY = MIMEText(df.to_html, 'html')
+	HTML_BODY = MIMEText(df.to_html(), 'html')
 	MESSAGE.attach(HTML_BODY)
 	s.sendmail(senderacc, recid, MESSAGE.as_string())
 	s.quit()
