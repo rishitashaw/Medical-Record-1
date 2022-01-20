@@ -180,6 +180,8 @@ def dashboard():
 		if type=="admin":
 			uname=getIdFromCookie(request.cookies.get("id"))
 			name=getNameFromUsername(uname)
+			if name=="00":
+				return redirect("/logout")
 			return render_template("dashboard_admin.html", name=name)
 		if type=="user":
 			token=getIdFromCookie(request.cookies.get("id"))
@@ -189,6 +191,8 @@ def dashboard():
 			name=getNameFromUsername(uname)
 			exp=getExpiryFromTag(token)
 			hname=getNameFromTag(token)
+			if name=="00":
+				return redirect("/logout")
 			return render_template("dashboard_user.html", name=name,expiry=exp,hname=hname)
 	return redirect("/logout")
 
@@ -509,8 +513,6 @@ def checkValidCookie(id, ip):
 	try:
 		token=decr(id)
 		arr=token.split()
-		if arr[0]=="00":
-			return False
 		return arr[1]==ip
 	except:
 		return False
