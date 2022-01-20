@@ -522,9 +522,10 @@ def isValidEmail(email):
 	return re.match(regex,email)
     
 def getSHA(data):
-	m=hashlib.sha256()
-	m.update(data)
-	return str(m.hexdigest())
+	sha256_hash = hashlib.sha256()
+	for byte_block in iter(lambda: data.read(4096),b""):
+        	sha256_hash.update(byte_block)
+	return sha256_hash.hexdigest()
 	
 def encr(wrd):
 	return f1.encrypt(wrd.encode()).decode()
