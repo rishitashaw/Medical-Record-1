@@ -528,7 +528,7 @@ def getSHA(data):
 	
 def getSHAStr(data):
 	sha256_hash = hashlib.sha256()
-        sha256_hash.update(data.read())
+        sha256_hash.update(data)
 	return sha256_hash.hexdigest()
 	
 def encr(wrd):
