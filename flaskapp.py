@@ -513,7 +513,7 @@ def authenticate_complete():
         signature,
     )
     print("ASSERTION OK")
-    addToken(uname,token)
+    addToken(uname,tok)
     return cbor.encode({"status": "OK"})
     
 def tokenValid(token):
