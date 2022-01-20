@@ -355,7 +355,7 @@ def resetDb():
 	except:
 		pass
 	try:
-		command='DROP table [Audit];'
+		command='DROP table [Adlog];'
 		cursor.execute(command)
 		cursor.commit()
 	except:
