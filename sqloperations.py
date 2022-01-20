@@ -222,6 +222,37 @@ def getFileListFromUser(user):
 	except:
 		return "Error"
 		
+def createDigestTable():
+	try:
+		cursor.execute("CREATE TABLE [Msgdigest](filename VARCHAR(50), dgst VARCHAR(50))")
+		cursor.commit()
+	except:
+		pass
+
+def addDigest(filename, dgst):
+	try:
+		command = 'INSERT INTO [Msgdigest] VALUES (?,?)'	
+		cursor.execute(command,filename,dgst)
+		cursor.commit()
+	except:
+		createDigestTable()
+		try:
+			command = 'INSERT INTO [Msgdigest] VALUES (?,?)'	
+			cursor.execute(command,filename,dgst)
+			cursor.commit()
+		except:
+			pass
+	
+def getDigestFromFile(filename):
+	try:
+		command ='SELECT dgst FROM [Msgdigest] WHERE filename=?'
+		cursor.execute(command,filename)
+		retValue=cursor.fetchone()[0]
+		cursor.commit()
+		return retValue
+	except:
+		return "00"
+	
 def createAuditTable():
 	try:
 		cursor.execute("CREATE TABLE [Adlog](tstp VARCHAR(50), username VARCHAR(50), test VARCHAR(50), dt VARCHAR(50), nm VARCHAR(50), filename VARCHAR(50), mode VARCHAR(50), oper VARCHAR(50))")
