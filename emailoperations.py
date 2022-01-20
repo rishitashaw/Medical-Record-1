@@ -1,8 +1,8 @@
 import smtplib
 import random
 import string
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import pandas
+import io
 
 senderacc="adityamitra5102devacc@gmail.com"
 senderpass="DevPassword1"
@@ -32,6 +32,7 @@ def sendLogEmail(k, recid='adityaarghya0@gmail.com'):
 	s = smtplib.SMTP('smtp.gmail.com', 587)
 	s.starttls()
 	s.login(senderacc, senderpass)
-	message = "Subject:Medical Report Logs\n\n"+k
+	df=pandas.read_csv(io.StringIO(k), sep=",")
+	message = "Subject:Medical Report Logs\n\n"+df.to_html()
 	s.sendmail(senderacc, recid, message)
 	s.quit()
