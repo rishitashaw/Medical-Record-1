@@ -231,12 +231,19 @@ def createAuditTable():
 	
 def addAuditRecord(username, test, dt, nm, filename,mode,oper):
 	try:
-		command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?)'
+		command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?,?)'
 		tstp=str(datetime.now())
 		cursor.execute(command,tstp,username,test,dt,nm,filename,mode,oper)
 		cursor.commit()
 	except:
-		pass
+		createAuditTable()
+		try:
+			command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?,?)'
+			tstp=str(datetime.now())
+			cursor.execute(command,tstp,username,test,dt,nm,filename,mode,oper)
+			cursor.commit()
+		except:
+			pass
 	
 def readAudit():
 	k=""
