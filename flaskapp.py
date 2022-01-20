@@ -568,7 +568,7 @@ def uplDateValid(lnkdt):
 	
 def linkDateValid(lnkdt):
 	now=datetime.now()
-	dtm=datetime.strptime(lnkdt)
+	dtm=datetime.strptime(lnkdt, "%Y-%m-%d %H:%M:%S")
 	expdt=dtm+timedelta(minutes = 10)
 	k=exp>=now
 	print(k,exp,now)
