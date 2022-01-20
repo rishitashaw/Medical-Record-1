@@ -372,7 +372,7 @@ def loginotp():
 	sec=uname+"$"+otp+"$"+request.remote_addr
 	encotp=encr(sec)
 	sendEmail(eml,otp)
-	return render_template("loginotp.html",encotp=encotp,encuname=encuname)
+	return render_template("loginotp.html",encotp=encotp)
 	
 @app.route("/loginotpinp", methods=["GET","POST"])
 def loginotpinp():
