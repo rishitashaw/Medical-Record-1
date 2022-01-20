@@ -254,7 +254,7 @@ def readAudit():
 	for i in retValue:
 		for x in range (0,8):
 			k=k+i[x]+", "
-		k=k[:-1]
+		k=k[:-2]
 		k=k+"\n"
 	return k
 		
