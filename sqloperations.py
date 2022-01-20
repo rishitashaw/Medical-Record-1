@@ -164,6 +164,36 @@ def getUserFromFile(filename):
 	except:
 		return "00"
 	
+def getTestFromFile(filename):
+	try:
+		command ='SELECT test FROM [File] WHERE filename=?'
+		cursor.execute(command,filename)
+		retValue=cursor.fetchone()[0]
+		cursor.commit()
+		return retValue
+	except:
+		return "00"
+
+def getDateFromFile(filename):
+	try:
+		command ='SELECT dt FROM [File] WHERE filename=?'
+		cursor.execute(command,filename)
+		retValue=cursor.fetchone()[0]
+		cursor.commit()
+		return retValue
+	except:
+		return "00"
+
+def getUploaderFromFile(filename):
+	try:
+		command ='SELECT uploader FROM [File] WHERE filename=?'
+		cursor.execute(command,filename)
+		retValue=cursor.fetchone()[0]
+		cursor.commit()
+		return retValue
+	except:
+		return "00"
+	
 def getFileListFromUser(user):
 	try:
 		op='\n'
