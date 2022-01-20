@@ -132,7 +132,7 @@ def signin():
 	uname=uname
 	encuname=encr(uname+' '+request.remote_addr)
 	resp=make_response(redirect("/dashboard"))
-	resp.set_cookie("id",encuname)
+	resp.set_cookie("id",encuname, max_age=3600)
 	resp.set_cookie("type","admin")
 	return resp
 
@@ -317,7 +317,7 @@ def readtag():
 		return render_template("error.html", reason="Token expired")
 	tok=encr(token+' '+request.remote_addr)
 	resp=make_response(redirect("/dashboard"))
-	resp.set_cookie("id",tok)
+	resp.set_cookie("id",tok, max_age=3600)
 	resp.set_cookie("type","user")
 	return resp
 
@@ -354,7 +354,7 @@ def loginotpinp():
 	if otp==inpotp:
 		encuname=encr(uname+' '+request.remote_addr)
 		resp=make_response(redirect("/dashboard"))
-		resp.set_cookie("id",encuname)
+		resp.set_cookie("id",encuname, max_age=3600)
 		resp.set_cookie("type","admin")
 		return resp
 	else:
