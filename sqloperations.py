@@ -360,6 +360,12 @@ def resetDb():
 		cursor.commit()
 	except:
 		pass
+	try:
+		command='DROP table [Msgdigest];'
+		cursor.execute(command)
+		cursor.commit()
+	except:
+		pass
 
 def createAllTables():
 	createUserTable()
@@ -367,3 +373,4 @@ def createAllTables():
 	createFileTable()
 	createAuthTable()
 	createAuditTable()
+	createDigestTable()
