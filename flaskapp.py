@@ -79,10 +79,11 @@ def signupresp():
 	if not em2=="00":
 		return render_template("error.html", reason="Username already exists")
 	
-	now=str(datetime.now())
+	now=datetime.now()
+	date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
 	tok=str(uuid.uuid4())
 	addToken(uname,tok)
-	sec=name+"$"+uname+"$"+eml+"$"+now+"$"+request.remote_addr+"$"+tok
+	sec=name+"$"+uname+"$"+eml+"$"+date_time+"$"+request.remote_addr+"$"+tok
 	encotp=encr(sec)
 	lnk='https://'+url+'/otpinp?token='+encotp
 	sendEmailLink(eml,lnk)
@@ -569,7 +570,7 @@ def uplDateValid(lnkdt):
 def linkDateValid(lnkdt):
 	now=datetime.now()
 	print(lnkdt)
-	dtm=datetime.strptime(lnkdt, "%Y-%m-%d %H:%M:%S")
+	dtm=datetime.strptime(lnkdt, "%m/%d/%Y, %H:%M:%S")
 	expdt=dtm+timedelta(minutes = 10)
 	k=exp>=now
 	print(k,exp,now)
