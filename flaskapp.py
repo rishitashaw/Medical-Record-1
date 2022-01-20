@@ -509,6 +509,7 @@ def checkValidCookie(id, ip):
 	try:
 		token=decr(id)
 		arr=token.split()
+		if arr[0]=="00" return False
 		return arr[1]==ip
 	except:
 		return False
