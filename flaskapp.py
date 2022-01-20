@@ -80,20 +80,27 @@ def signupresp():
 	if not em2=="00":
 		return render_template("error.html", reason="Username already exists")
 	otp=genOtp()
-	encname=encr(name)
-	encuname=encr(uname)
-	enceml=encr(eml)
-	encotp=encr(otp)
+	encname=encr(name+" "+request.remote_addr)
+	encuname=encr(uname+" "+request.remote_addr)
+	enceml=encr(eml+" "+request.remote_addr)
+	encotp=encr(otp+" "+request.remote_addr)
 	sendEmail(eml,otp)
 	return render_template("otpinput.html",encotp=encotp,encname=encname,enceml=enceml,encuname=encuname)
 	
 @app.route("/otpinp", methods=["GET", "POST"])
 def otpinp():
-	otp=decr(request.form['encotp'])
-	name=decr(request.form['encname'])
-	uname=decr(request.form['encuname'])
-	eml=decr(request.form['enceml'])
+	otp=decr(request.form['encotp']).split()[1]
+	name=decr(request.form['encname']).split()[1]
+	uname=decr(request.form['encuname']).split()[1]
+	eml=decr(request.form['enceml']).split()[1]
 	inpotp=request.form['otp'].strip()
+	ip=request.remote_addr
+	ip1=decr(request.form['encotp']).split()[0]
+	ip2=decr(request.form['encname']).split()[0]
+	ip3=decr(request.form['encuname']).split()[0]
+	ip4=decr(request.form['enceml']).split()[0]
+	if not (ip==ip1 and ip==ip2 and ip==ip3 and ip==ip4):
+		return redirect("/logout")
 	if otp==inpotp:
 		fln=str(uuid.uuid4())
 		addUser(uname,eml,name,fln)
