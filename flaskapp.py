@@ -125,9 +125,9 @@ def setcookie():
 def authenticate():
 	uname=request.cookies.get("username")
 	token=uuid.uuid4()
-	token=str(token)+"$"+request.remote_addr
+	token=str(token)+"$"+request.remote_addr+"$"+uname
 	tok=encr(token)
-	return render_template("authenticate.html", uname=uname, tok=tok)
+	return render_template("authenticate.html", tok=tok)
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
@@ -472,7 +472,13 @@ def register_complete():
 
 @app.route("/api/authenticate/begin", methods=["GET","POST"])
 def authenticate_begin():
-    uname=request.args.get('uname')
+    token=decr(request.args.get('token')).split('$')
+    ip=token[1]
+    uname=token[2]
+    ip1=request.remote_addr
+    print(ip, ip1)
+    if not ip==ip1:
+	abort(401)
     credentials=read_key(uname)
     if not credentials:
         abort(404)
@@ -484,10 +490,10 @@ def authenticate_begin():
 
 @app.route("/api/authenticate/complete", methods=["GET","POST"])
 def authenticate_complete():
-    uname=request.args.get('uname')
     token=decr(request.args.get('token')).split('$')
     tok=token[0]
     ip=token[1]
+    uname=token[2]
     ip1=request.remote_addr
     print(ip, ip1)
     if not ip==ip1:
