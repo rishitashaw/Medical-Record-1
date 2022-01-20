@@ -81,12 +81,13 @@ def signupresp():
 	otp=genOtp()
 	sec=name+"$"+uname+"$"+eml+"$"+otp+"$"+request.remote_addr
 	encotp=encr(sec)
-	sendEmail(eml,otp)
-	return render_template("otpinput.html",encotp=encotp)
+	lnk='https://'+url+'/otpinp?token='+encotp
+	sendEmailLink(eml,lnk)
+	return render_template("error.html", reason='You can exit this tab and open the link sent to your email from this device only')
 	
 @app.route("/otpinp", methods=["GET", "POST"])
 def otpinp():
-	dat=decr(request.form['encotp']).split('$')
+	dat=decr(request.args.get('token')).split('$')
 	name=dat[0]
 	uname=dat[1]
 	eml=dat[2]
@@ -104,7 +105,7 @@ def otpinp():
 		resp.set_cookie("username",uname,max_age=60*60*24*365*50)
 		return resp
 	else:
-		return render_template("error.html", reason="Incorrect OTP")
+		return render_template("error.html", reason="Incorrect Link opened")
 
 @app.route("/initlogin", methods=["GET", "POST"])
 def initlogin():
@@ -382,12 +383,13 @@ def loginotp():
 	otp=genOtp()
 	sec=uname+"$"+otp+"$"+request.remote_addr
 	encotp=encr(sec)
-	sendEmail(eml,otp)
-	return render_template("loginotp.html",encotp=encotp)
+	lnk='https://'+url+'/loginotpinp?token='+encotp
+	sendEmailLink(eml,lnk)
+	return render_template("error.html", reason='You can exit this tab and open the link sent to your email from this device only')
 	
 @app.route("/loginotpinp", methods=["GET","POST"])
 def loginotpinp():
-	sec=decr(request.form['encotp']).split('$')
+	sec=decr(request.args.get('token')).split('$')
 	uname=sec[0]
 	otp=sec[1]
 	inpotp=request.form['otp']
