@@ -305,7 +305,7 @@ def downloadfile():
 			return render_template("error.html", reason="Unauthorized access")
 		file=getDownloadLink(fln)
 		dgst1=getDigestFromFile(fln)
-		dgst2=getSHA(file)
+		dgst2=getSHAStr(file)
 		if not dgst1==dgst2:
 			return render_template("error.html", reason="File may have been tampered with.")
 		tname=getTestFromFile(fln)
@@ -523,8 +523,12 @@ def isValidEmail(email):
     
 def getSHA(data):
 	sha256_hash = hashlib.sha256()
-	for byte_block in iter(lambda: data.read(4096),b""):
-        	sha256_hash.update(byte_block)
+        sha256_hash.update(data.read())
+	return sha256_hash.hexdigest()
+	
+def getSHAStr(data):
+	sha256_hash = hashlib.sha256()
+        sha256_hash.update(data.read())
 	return sha256_hash.hexdigest()
 	
 def encr(wrd):
