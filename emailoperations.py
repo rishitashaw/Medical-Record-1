@@ -37,7 +37,7 @@ def sendLogEmail(k):
 	msg['Subject'] = 'Medical Record Logs'
 	msg['From'] = senderacc
 	msg['To'] = recid
-	msgText = MIMEText('<b>%s</b>' % (body), 'html')
+	msgText = MIMEText('Medical Reports Server logs', 'html')
 	msg.attach(msgText)
 	lg=MIMEText(k)
 	lg.add_header('Content-Disposition', 'attachment', filename="log.csv")
