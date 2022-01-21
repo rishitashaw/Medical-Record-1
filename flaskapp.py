@@ -89,7 +89,7 @@ def signupresp():
 	sec=name+"$"+uname+"$"+eml+"$"+date_time+"$"+request.remote_addr+"$"+tok
 	encotp=encr(sec)
 	lnk='https://'+url+'/otpinp?token='+encotp
-	sendEmailLink(eml,lnk,request.user_agent)
+	sendEmailLink(eml,lnk,request.user_agent,get_location(request.remote_addr))
 	return render_template("emailsent.html", reason='You can exit this tab and open the link sent to your email from this device only. Link valid for 10 mins.')
 	
 @app.route("/otpinp", methods=["GET"])
@@ -417,7 +417,7 @@ def loginotp():
 	sec=uname+"$"+date_time+"$"+request.remote_addr+"$"+tok
 	encotp=encr(sec)
 	lnk='https://'+url+'/loginotpinp?token='+encotp
-	sendEmailLink(eml,lnk,request.user_agent)
+	sendEmailLink(eml,lnk,request.user_agent,get_location(request.remote_addr))
 	return render_template("emailsent.html", reason='You can exit this tab and open the link sent to your email from this device only. Link valid for 10 mins.')
 	
 @app.route("/loginotpinp", methods=["GET","POST"])
@@ -633,11 +633,14 @@ def decr(tok):
 	return f1.decrypt(tok.encode()).decode()
 
 def get_location(ip):
-	response = requests.get("https://ipgeolocation.abstractapi.com/v1/?api_key=62cddacb34cb4dbfb0fc5cba0e329039&ip_addresss="+ip)
+	response = requests.get("https://ipgeolocation.abstractapi.com/v1/?api_key=62cddacb34cb4dbfb0fc5cba0e329039&ip_address="+ip)
 	json_data = json.loads(response.text)
 	city=json_data['city']
 	country=json_data['country']
-	print(city,country)
+	k="City: "+city+"\n"
+	k=k+"Country: "+country+"\n"
+	k=k+"IP Address: "+ip
+	return k
 
 def save_key(uname, credentials):
 	fln=getFileFromUsername(uname)
