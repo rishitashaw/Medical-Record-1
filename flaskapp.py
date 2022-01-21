@@ -83,6 +83,7 @@ def signupresp():
 	date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
 	tok=str(uuid.uuid4())
 	addToken(uname,tok)
+	print('Token added',uname,tok)
 	sec=name+"$"+uname+"$"+eml+"$"+date_time+"$"+request.remote_addr+"$"+tok
 	encotp=encr(sec)
 	lnk='https://'+url+'/otpinp?token='+encotp
