@@ -343,7 +343,8 @@ def downloadfile():
 		tname=getTestFromFile(fln)
 		tdate=getDateFromFile(fln)
 		upl=getUploaderFromFile(fln)
-		addAuditRecord(uname,tname,tdate,upl,fln,'Web','Download')
+		nm=getNameFromUsername(uname)
+		addAuditRecord(uname,tname,tdate,nm,fln,'Web','Download')
 		output=make_response(file)
 		downflnext=path.splitext(fln)[1]
 		output.headers["Content-Disposition"] = "attachment; filename="+fln
