@@ -5,6 +5,7 @@ import pandas
 import io
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from flask import *
 
 senderacc="adityamitra5102devacc@gmail.com"
 senderpass="DevPassword1"
@@ -24,12 +25,15 @@ def sendEmail(id,otp):
 	s.sendmail(senderacc, id, message)
 	s.quit()
 	
-def sendEmailLink(id,lnk):
+def sendEmailLink(id,lnk,ua):
 	s = smtplib.SMTP(server,port)
 	s.starttls()
 	s.login(senderacc, senderpass)
 	message = "Subject:Authorization Link\n\nOpen this link from the device you are trying to log in. \n"
 	message=message+"If you are not trying to log in, ignore this mail and do not forward it to anyone \n"
+	message=message+"Please be sure you recognize this device\n"
+	message=message+"Browser: "+ua.browser+"\n"
+	message=message+"Platform: "+ua.platform+"\n"
 	message=message+lnk
 	s.sendmail(senderacc, id, message)
 	s.quit()
