@@ -8,3 +8,6 @@ secure-smtplib
 pyre2
 azure-storage-blob
 pandas
+pyyaml
+ua-parser
+user-agents
