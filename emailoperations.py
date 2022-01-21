@@ -51,7 +51,7 @@ def sendEmailTokenAdd(id,hname,exp):
 	s = smtplib.SMTP(server,port)
 	s.starttls()
 	s.login(senderacc, senderpass)
-	message = "Subject:Medical Report Added\n\nTemporary token provisioned to "+hname+" and is expiring on "+exp
+	message = "Subject:Token Provisioned\n\nTemporary token provisioned to "+hname+" and is expiring on "+exp
 	s.sendmail(senderacc, id, message)
 	s.quit()
 	
