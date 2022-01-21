@@ -46,6 +46,14 @@ def sendEmailNotifAdd(id,tname,tdate,upl,name):
 	message = "Subject:Medical Report Added\n\nTest report: "+tname+" of "+name+" tested on "+tdate+" uploaded by "+upl
 	s.sendmail(senderacc, id, message)
 	s.quit()
+
+def sendEmailTokenAdd(id,hname,exp):
+	s = smtplib.SMTP(server,port)
+	s.starttls()
+	s.login(senderacc, senderpass)
+	message = "Subject:Medical Report Added\n\nTemporary token provisioned to "+hname+" and is expiring on "+exp
+	s.sendmail(senderacc, id, message)
+	s.quit()
 	
 def sendLogEmail(k, recid='adityaarghya0@gmail.com'):
 	s = smtplib.SMTP(server,port)
