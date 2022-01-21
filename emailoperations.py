@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from flask import *
 
 senderacc="adityamitra5102devacc@gmail.com"
-senderpass="DevPassword1"
+senderpass="AccountPassword1"
 server='smtp.gmail.com'
 port=587
 
