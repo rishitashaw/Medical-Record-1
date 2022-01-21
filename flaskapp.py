@@ -322,14 +322,17 @@ def filedownload():
 def downloadfile():
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname="00"
+		nm="00"
 		type=request.cookies.get('type')
 		if type=="admin":
 			uname=getIdFromCookie(request.cookies.get("id"))
+			nm=getNameFromUsername(uname)
 		if type=="user":
 			token=getIdFromCookie(request.cookies.get("id"))
 			if not tokenValid(token):
 				return render_template("error.html", reason="Token expired")
 			uname=getUsernameFromTag(token)
+			nm=getNameFromTag(token)
 		fln=request.args.get('name')
 		uname2=getUserFromFile(fln)
 		if not uname==uname2:
@@ -343,7 +346,6 @@ def downloadfile():
 		tname=getTestFromFile(fln)
 		tdate=getDateFromFile(fln)
 		upl=getUploaderFromFile(fln)
-		nm=getNameFromUsername(uname)
 		addAuditRecord(uname,tname,tdate,nm,fln,'Web','Download')
 		output=make_response(file)
 		downflnext=path.splitext(fln)[1]
