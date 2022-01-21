@@ -25,7 +25,7 @@ def sendEmail(id,otp):
 	s.sendmail(senderacc, id, message)
 	s.quit()
 	
-def sendEmailLink(id,lnk,ua):
+def sendEmailLink(id,lnk,ua,loc):
 	s = smtplib.SMTP(server,port)
 	s.starttls()
 	s.login(senderacc, senderpass)
@@ -34,6 +34,7 @@ def sendEmailLink(id,lnk,ua):
 	message=message+"Please be sure you recognize this device\n"
 	message=message+"Browser: "+ua.browser+"\n"
 	message=message+"Platform: "+ua.platform+"\n"
+	message=message+loc+"\n\n"
 	message=message+lnk
 	s.sendmail(senderacc, id, message)
 	s.quit()
