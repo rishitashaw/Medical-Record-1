@@ -175,6 +175,8 @@ def inittag():
 		iname=request.form['iname'].strip()
 		tagid=uuid.uuid4()
 		addTag(uname,tagid,iname,exp)
+		eml=getEmailFromUsername(uname)
+		sendEmailTokenAdd(eml,iname,exp)
 		return render_template("webnfc.html", scanbuttonparam="hidden", writebuttonparam="", token=tagid)
 	return redirect("/")
 	
