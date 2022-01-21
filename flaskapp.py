@@ -632,6 +632,13 @@ def encr(wrd):
 def decr(tok):
 	return f1.decrypt(tok.encode()).decode()
 
+def get_location(ip):
+	response = requests.get("https://ipgeolocation.abstractapi.com/v1/?api_key=62cddacb34cb4dbfb0fc5cba0e329039&ip_addresss="+ip)
+	json_data = json.loads(response.text)
+	city=json_data['city']
+	country=json_data['country']
+	print(city,country)
+
 def save_key(uname, credentials):
 	fln=getFileFromUsername(uname)
 	uploadCryptoFile(pickle.dumps(credentials),fln)
