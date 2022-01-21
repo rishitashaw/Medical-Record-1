@@ -301,7 +301,7 @@ def reportupload():
 	return "File uploaded"
 
 @app.route("/api/tokendetails", methods=["GET", "POST"])
-def reportupload():
+def tokendetails():
 	tag=request.args.get('tag')
 	token=tag[4:].strip()
 	if not tokenValid(token):
