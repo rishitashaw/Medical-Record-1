@@ -278,7 +278,7 @@ def reportupload():
 	tdate=request.form['testdate']
 	if not uplDateValid(tdate):
 		return "Invalid test date"
-	uname=uname=getUsernameFromTag(token)
+	uname=getUsernameFromTag(token)
 	upl=getNameFromTag(token)
 	nm=getNameFromUsername(uname)
 	eml=getEmailFromUsername(uname)
@@ -299,6 +299,19 @@ def reportupload():
 	except:
 		pass
 	return "File uploaded"
+
+@app.route("/api/tokendetails", methods=["GET", "POST"])
+def reportupload():
+	tag=request.args.get('tag')
+	token=tag[4:].strip()
+	if not tokenValid(token):
+		return "Token expired"
+	uname=getUsernameFromTag(token)
+	nm=getNameFromUsername(uname)
+	exp=getExpiryFromTag(token)
+	hname=getNameFromTag(token)
+	dat={"name":nm,"expiry":exp,"issued_to":hname}
+	return json.dumps(dat)
 	
 @app.route("/filedownload", methods=["GET","POST"])
 def filedownload():
