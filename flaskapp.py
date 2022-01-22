@@ -155,7 +155,8 @@ def signin():
 	print(uname)
 	deleteToken(token)
 	uname=uname
-	encuname=encr(uname+' '+request.remote_addr)
+	date_time = now.strftime("%m/%d/%Y-%H:%M:%S")
+	encuname=encr(uname+' '+request.remote_addr+' '+date_time)
 	resp=make_response(redirect("/dashboard"))
 	resp.set_cookie("id",encuname, max_age=3600)
 	resp.set_cookie("type","admin")
@@ -436,7 +437,8 @@ def loginotpinp():
 	print(tok,uname,uname1)
 	deleteToken(tok)
 	if uname==uname1 and linkDateValid(tm):
-		encuname=encr(uname+' '+request.remote_addr)
+		date_time = now.strftime("%m/%d/%Y-%H:%M:%S")
+		encuname=encr(uname+' '+request.remote_addr+' '+date_time)
 		resp=make_response(redirect("/dashboard"))
 		resp.set_cookie("id",encuname, max_age=3600)
 		resp.set_cookie("type","admin")
@@ -607,11 +609,22 @@ def linkDateValid(lnkdt):
 	print(k,expdt,now)
 	return k
 
+def cookieDateValid(cdt):
+	now=datetime.now()
+	print(cdt)
+	dtm=datetime.strptime(cdt, "%m/%d/%Y-%H:%M:%S")
+	expdt=dtm+timedelta(hours = 1)
+	k=expdt>=now
+	print(k,expdt,now)
+	return k
+
+
 def checkValidCookie(id, ip):
 	try:
 		token=decr(id)
 		arr=token.split()
-		return arr[1]==ip
+		cdt=arr[2]
+		return arr[1]==ip && cookieDateValid(cdt)
 	except:
 		return False
 	
