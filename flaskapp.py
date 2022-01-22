@@ -624,7 +624,7 @@ def checkValidCookie(id, ip):
 		token=decr(id)
 		arr=token.split()
 		cdt=arr[2]
-		return arr[1]==ip && cookieDateValid(cdt)
+		return arr[1]==ip and cookieDateValid(cdt)
 	except:
 		return False
 	
