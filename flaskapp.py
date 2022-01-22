@@ -154,7 +154,7 @@ def signin():
 	uname=getUsernameFromToken(token)
 	print(uname)
 	deleteToken(token)
-	uname=uname
+	now=datetime.now()
 	date_time = now.strftime("%m/%d/%Y-%H:%M:%S")
 	encuname=encr(uname+' '+request.remote_addr+' '+date_time)
 	resp=make_response(redirect("/dashboard"))
