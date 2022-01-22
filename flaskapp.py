@@ -382,9 +382,10 @@ def readtag():
 	tag=request.args.get('tagid')
 	token=tag[4:].strip()
 	if not tokenValid(token):
-		pass
-		#return render_template("error.html", reason="Token expired")
-	tok=encr(token+' '+request.remote_addr)
+		return render_template("error.html", reason="Token expired")
+	now=datetime.now()
+	date_time = now.strftime("%m/%d/%Y-%H:%M:%S")
+	tok=encr(token+' '+request.remote_addr+' '+date_time)
 	resp=make_response(redirect("/dashboard"))
 	resp.set_cookie("id",tok, max_age=3600)
 	resp.set_cookie("type","user")
