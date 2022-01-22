@@ -437,6 +437,7 @@ def loginotpinp():
 	print(tok,uname,uname1)
 	deleteToken(tok)
 	if uname==uname1 and linkDateValid(tm):
+		now=datetime.now()
 		date_time = now.strftime("%m/%d/%Y-%H:%M:%S")
 		encuname=encr(uname+' '+request.remote_addr+' '+date_time)
 		resp=make_response(redirect("/dashboard"))
