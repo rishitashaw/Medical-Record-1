@@ -264,7 +264,7 @@ def uploaddone():
 		addFile(uname,tname,tdate,upl,fln)
 		dgst=getSHAStr(filecont)
 		addDigest(fln,dgst)
-		addAuditRecord(uname,tname,tdate,upl,fln,'Web','Upload')
+		addAuditRecord(uname,tname,tdate,upl,request.remote_addr,fln,'Web','Upload')
 		eml=getEmailFromUsername(uname)
 		nm=getNameFromUsername(uname)
 		try:
@@ -298,7 +298,7 @@ def reportupload():
 	dgst=getSHAStr(filecont)
 	addDigest(fln,dgst)
 	addFile(uname,tname,tdate,upl,fln)
-	addAuditRecord(uname,tname,tdate,upl,fln,'API','Upload')
+	addAuditRecord(uname,tname,tdate,upl,request.remote_addr,fln,'API','Upload')
 	try:
 		sendEmailNotifAdd(eml,tname,tdate,upl,nm)
 	except:
@@ -364,7 +364,7 @@ def downloadfile():
 		tname=getTestFromFile(fln)
 		tdate=getDateFromFile(fln)
 		upl=getUploaderFromFile(fln)
-		addAuditRecord(uname,tname,tdate,nm,fln,'Web','Download')
+		addAuditRecord(uname,tname,tdate,nm,request.remote_addr,fln,'Web','Download')
 		output=make_response(file)
 		downflnext=path.splitext(fln)[1]
 		output.headers["Content-Disposition"] = "attachment; filename="+fln
