@@ -250,35 +250,35 @@ def getDigestFromFile(filename):
 	
 def createAuditTable():
 	try:
-		cursor.execute("CREATE TABLE [Adlog](tstp VARCHAR(50), username VARCHAR(50), test VARCHAR(50), dt VARCHAR(50), nm VARCHAR(50), filename VARCHAR(50), mode VARCHAR(50), oper VARCHAR(50))")
+		cursor.execute("CREATE TABLE [Adlog](tstp VARCHAR(50), username VARCHAR(50), test VARCHAR(50), dt VARCHAR(50), nm VARCHAR(50), addr VARCHAR(20), filename VARCHAR(50), mode VARCHAR(50), oper VARCHAR(50))")
 		cursor.commit()
 	except:
 		pass
 	
-def addAuditRecord(username, test, dt, nm, filename,mode,oper):
+def addAuditRecord(username, test, dt, nm, addr, filename,mode,oper):
 	try:
-		command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?,?)'
+		command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?,?,?)'
 		tstp=str(datetime.now())
-		cursor.execute(command,tstp,username,test,dt,nm,filename,mode,oper)
+		cursor.execute(command,tstp,username,test,dt,nm,addr,filename,mode,oper)
 		cursor.commit()
 	except:
 		createAuditTable()
 		try:
-			command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?,?)'
+			command = 'INSERT INTO [Adlog] VALUES (?,?,?,?,?,?,?,?,?)'
 			tstp=str(datetime.now())
-			cursor.execute(command,tstp,username,test,dt,nm,filename,mode,oper)
+			cursor.execute(command,tstp,username,test,dt,nm,addr,filename,mode,oper)
 			cursor.commit()
 		except:
 			pass
 	
 def readAudit():
-	k="Timestamp, Username, Test name, Date, Operator, Filename, Mode, Operation\n"
+	k="Timestamp, Username, Test name, Date, Operator, IP Address, Filename, Mode, Operation\n"
 	command= 'SELECT * FROM [Adlog]'
 	cursor.execute(command)
 	retValue=cursor.fetchall()
 	cursor.commit()
 	for i in retValue:
-		for x in range (0,8):
+		for x in range (0,9):
 			k=k+i[x]+", "
 		k=k[:-2]
 		k=k+"\n"
