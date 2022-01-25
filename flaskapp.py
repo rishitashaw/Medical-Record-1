@@ -446,7 +446,7 @@ def loginotpinp():
 		resp.set_cookie("type","admin")
 		return resp
 	else:
-		return render_template("error.html", reason="Incorrect OTP")
+		return render_template("error.html", reason="Incorrect link opened")
 
 @app.route("/api/register/beginplatform", methods=["GET","POST"])
 def register_begin_platform():
