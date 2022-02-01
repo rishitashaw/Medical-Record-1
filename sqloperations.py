@@ -8,6 +8,8 @@ username = 'sql_user'
 password = '{Password12345*}'   
 driver= '{ODBC Driver 17 for SQL Server}'
 conn=pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
+conn.close()
+conn=pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor=conn.cursor()
 
 def createUserTable():
