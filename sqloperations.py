@@ -377,9 +377,10 @@ def createAllTables():
 	createDigestTable()
 	
 def testCall():
-	try:
-		command='SELECT * FROM [User]'
-		cursor.execute(command)
-		cursor.commit()
-	except:
-		os.system('sudo service apache2 restart')
+	os.system('sudo service apache2 restart')
+	#try:
+	#	command='SELECT * FROM [User]'
+	#	cursor.execute(command)
+	#	cursor.commit()
+	#except:
+	#	os.system('sudo service apache2 restart')
