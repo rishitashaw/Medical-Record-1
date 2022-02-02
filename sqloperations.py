@@ -376,7 +376,7 @@ def createAllTables():
 	
 def testCall():
 	print("Server restarted")
-	os.system('service apache2 restart')
+	os.system('sudo service apache2 restart')
 	#try:
 	#	command='SELECT * FROM [User]'
 	#	cursor.execute(command)
