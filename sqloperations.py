@@ -380,6 +380,5 @@ def testCall():
 		cursor.execute(command)
 		cursor.commit()
 	except:
-		os.system('sudo service apache2 restart')
 		print("Server restarted")
 		os.system('sudo service apache2 restart')
