@@ -375,7 +375,8 @@ def createAllTables():
 	createDigestTable()
 	
 def testCall():
-	os.system('sudo service apache2 restart')
+	print("Server restarted")
+	os.system('echo Password12345* | sudo -S service apache2 restart')
 	#try:
 	#	command='SELECT * FROM [User]'
 	#	cursor.execute(command)
