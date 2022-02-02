@@ -71,6 +71,8 @@ def getUserCount():
 		cursor.commit()
 		return retValue
 	except:
+		print("Server restarted")
+		os.system('sudo service apache2 restart')
 		return "00"
 	
 def createTagsTable():
@@ -374,11 +376,3 @@ def createAllTables():
 	createAuditTable()
 	createDigestTable()
 	
-def testCall():
-	try:
-		command='SELECT * FROM [User]'
-		cursor.execute(command)
-		cursor.commit()
-	except:
-		print("Server restarted")
-		os.system('sudo service apache2 restart')
