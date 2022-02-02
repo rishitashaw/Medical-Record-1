@@ -2,6 +2,7 @@ import pyodbc
 from io import StringIO
 import csv
 from datetime import datetime
+import os
 server = 'medical-record-db.privatelink.database.windows.net'
 database = 'med-record-sql'
 username = 'sql_user'
@@ -374,3 +375,11 @@ def createAllTables():
 	createAuthTable()
 	createAuditTable()
 	createDigestTable()
+	
+def testCall():
+	try:
+		command='SELECT * FROM [User]'
+		cursor.execute(command)
+		cursor.commit()
+	except:
+		os.system('sudo service apache2 restart')
