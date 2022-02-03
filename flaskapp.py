@@ -94,6 +94,7 @@ def signupresp():
 	
 @app.route("/otpinp", methods=["GET"])
 def otpinp():
+	getUserCount()
 	dat=decr(request.args.get("token")).split('$')
 	name=dat[0]
 	uname=dat[1]
@@ -142,6 +143,7 @@ def authenticate():
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
+	getUserCount()
 	tok=decr(request.args.get('token')).split('$')
 	token=tok[0]
 	ip=tok[1]
@@ -170,6 +172,7 @@ def tagreg():
 	
 @app.route("/inittag", methods=["GET", "POST"])
 def inittag():
+	getUserCount()
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname=getIdFromCookie(request.cookies.get("id"))
 		exp=request.form['exp'].strip()
@@ -183,6 +186,7 @@ def inittag():
 	
 @app.route("/fidoreg", methods=["GET","POST"])
 def fidoreg():
+	getUserCount()
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname=getIdFromCookie(request.cookies.get("id"))
 		resp= make_response(render_template("register.html",encuname=encr(uname+"$"+request.remote_addr)))
@@ -192,6 +196,7 @@ def fidoreg():
 
 @app.route("/fidoregplatform", methods=["GET","POST"])
 def fidoregplatform():
+	getUserCount()
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname=getIdFromCookie(request.cookies.get("id"))
 		resp= make_response(render_template("register_platform.html",encuname=encr(uname+"$"+request.remote_addr)))
@@ -202,6 +207,7 @@ def fidoregplatform():
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+	getUserCount()
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		type=request.cookies.get('type')
 		if type=="admin":
@@ -234,6 +240,7 @@ def fileupload():
 	
 @app.route("/uploaddone", methods=["GET", "POST"])
 def uploaddone():
+	getUserCount()
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		type=request.cookies.get('type')
 		uname="00"
@@ -275,6 +282,7 @@ def uploaddone():
 	
 @app.route("/api/reportupload", methods=["GET", "POST"])
 def reportupload():
+	getUserCount()
 	tag=request.form['tag']
 	token=tag[4:].strip()
 	if not tokenValid(token):
@@ -307,6 +315,7 @@ def reportupload():
 
 @app.route("/api/tokendetails", methods=["GET", "POST"])
 def tokendetails():
+	getUserCount()
 	tag=request.args.get('tag')
 	token=tag[4:].strip()
 	if not tokenValid(token):
@@ -320,6 +329,7 @@ def tokendetails():
 	
 @app.route("/filedownload", methods=["GET","POST"])
 def filedownload():
+	getUserCount()
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		type=request.cookies.get('type')
 		uname="00"
@@ -338,6 +348,7 @@ def filedownload():
 
 @app.route("/downloadfile", methods=["GET","POST"])
 def downloadfile():
+	getUserCount()
 	if checkValidCookie(request.cookies.get('id'),request.remote_addr):
 		uname="00"
 		nm="00"
@@ -379,6 +390,7 @@ def inittagread():
 	
 @app.route("/readtag", methods=["GET", "POST"])
 def readtag():
+	getUserCount()
 	tag=request.args.get('tagid')
 	token=tag[4:].strip()
 	if not tokenValid(token):
@@ -406,6 +418,7 @@ def clearcookies():
 	
 @app.route("/loginotp", methods=["GET","POST"])
 def loginotp():
+	getUserCount()
 	uname=request.args.get('uname')
 	eml=getEmailFromUsername(uname)
 	if eml=="00":
@@ -426,6 +439,7 @@ def loginotp():
 	
 @app.route("/loginotpinp", methods=["GET","POST"])
 def loginotpinp():
+	getUserCount()
 	sec=decr(request.args.get('token')).split('$')
 	uname=sec[0]
 	tm=sec[1]
