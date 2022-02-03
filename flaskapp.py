@@ -467,6 +467,7 @@ def loginotpinp():
 def auditlog():
 	getUserCount()
 	audit()
+	return redirect("/")
 
 @app.route("/api/register/beginplatform", methods=["GET","POST"])
 def register_begin_platform():
