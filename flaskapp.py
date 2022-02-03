@@ -12,6 +12,7 @@ from os import path
 from sqloperations import *
 from emailoperations import *
 from storageoperations import *
+from readAudit import *
 from user_agents import parse
 import requests
 import hashlib
@@ -461,6 +462,11 @@ def loginotpinp():
 		return resp
 	else:
 		return render_template("error.html", reason="Incorrect link opened")
+	
+@app.route("/auditlog", methods=["GET","POST"])
+def auditlog():
+	getUserCount()
+	audit()
 
 @app.route("/api/register/beginplatform", methods=["GET","POST"])
 def register_begin_platform():
