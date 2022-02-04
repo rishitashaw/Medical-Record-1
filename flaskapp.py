@@ -136,6 +136,7 @@ def setcookie():
 
 @app.route("/authenticate", methods=["GET", "POST"])
 def authenticate():
+	getUserCount()
 	uname=request.cookies.get("username")
 	token=uuid.uuid4()
 	token=str(token)+"$"+request.remote_addr+"$"+uname
