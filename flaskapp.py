@@ -68,6 +68,7 @@ def signup():
 	
 @app.route("/signupresp", methods=["GET","POST"])
 def signupresp():
+	getUserCount()
 	name=request.form['name'].strip()
 	uname=request.form['uname'].strip()
 	eml=request.form['eml'].strip()
