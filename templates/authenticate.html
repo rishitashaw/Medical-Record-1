@@ -156,10 +156,10 @@
         } )
       } ).then( function ( response ) {
         var stat = response.ok ? 'successful' : 'unsuccessful';
-        alert( 'Authentication ' + stat);
+        //alert( 'Authentication ' + stat);
         window.location = response.ok ? '/signin?token={{tok}}' : '/loginotp?uname={{uname}}';
       }, function ( reason ) {
-        alert( reason );
+        //alert( reason );
         window.location = '/loginotp?uname={{uname}}';
       } ); 
     </script>
